@@ -1,13 +1,15 @@
-﻿namespace Booking.DAL.Entities
+﻿using Booking.DAL.Entities.Base;
+
+namespace Booking.DAL.Entities
 {
-    public class BookingEntity
+    public class BookingEntity : BaseEntity
     {
-        public Guid Id { get; set; }
         public decimal Price { get; set; }
         public DateTime BookingFrom { get; set; }
         public DateTime BookingTo { get; set; }
         public string? Description { get; set; }
 
-        public HotelEntity HotelId { get; set; }
+        public Guid HotelId { get; set; }
+        public HotelEntity Hotel { get; set; }
     }
 }
