@@ -1,8 +1,9 @@
-﻿namespace Booking.DAL.Entities
+﻿using Booking.DAL.Entities.Base;
+
+namespace Booking.DAL.Entities
 {
-    public class HotelEntity
+    public class HotelEntity : BaseEntity
     {
-        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }
