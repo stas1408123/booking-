@@ -4,8 +4,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDataAccessDependencies(builder.Configuration);
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
