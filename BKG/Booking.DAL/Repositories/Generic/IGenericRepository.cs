@@ -9,6 +9,6 @@ namespace Booking.DAL.Repositories.Generic
         Task<TEntity> GetByIdAsync(Guid id);
         Task<TEntity> AddAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
-        void Delete(TEntity entity);
+        Task DeleteAsync(TEntity entity);
     }
 }
