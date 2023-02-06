@@ -23,6 +23,31 @@ namespace Booking.DAL.Configurations
 
             builder.HasIndex(hotel => hotel.PhoneNumber)
                 .IsUnique();
+
+            builder.HasData(new HotelEntity
+            {
+                Id = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2"),
+                Title = "GYM HOTEL",
+                Description = "Nvm",
+                Stars = 5,
+                Owner = "Dima Hatetovski",
+                CreatedTime = DateTime.UtcNow,
+                CountRooms = 125,
+                PhoneNumber = "+375336869225",
+                Address = "Nvm"
+            }, 
+            new HotelEntity
+            {
+                Id = Guid.Parse("60e6d76a-9c13-488b-afce-a3b21dbc3177"),
+                Title = "Pashok Hotel",
+                Description = "Idk",
+                Stars = 3,
+                Owner = "Pashok Gagarin",
+                CreatedTime = DateTime.UtcNow,
+                CountRooms = 233,
+                PhoneNumber = "+123456802232",
+                Address = "Idk"
+            });
         }
     }
 }
