@@ -41,10 +41,10 @@ namespace Booking.DAL.Repositories.Generic
             return entity;
         }
 
-        public void Delete(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
             DbSet.Remove(entity);
-            DbContext.SaveChanges();
+            await DbContext.SaveChangesAsync();
         }
     }
 }
