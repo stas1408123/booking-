@@ -39,9 +39,10 @@ namespace Booking.BLL.Services.Generic
         public async Task<TModel> AddAsync(TModel model)
         {
             var entity = Mapper.Map<TModel, TEntity>(model);
-            await GenericRepository.AddAsync(entity);
+            var createdEntity = await GenericRepository.AddAsync(entity);
+            var createdModel = Mapper.Map<TEntity, TModel>(createdEntity);
 
-            return model;
+            return createdModel;
         }
 
         public async Task<TModel> UpdateAsync(TModel model)
