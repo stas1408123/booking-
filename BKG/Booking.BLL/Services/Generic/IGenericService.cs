@@ -10,6 +10,6 @@ namespace Booking.BLL.Services.Generic
         Task<TModel> GetByIdAsync(Guid id);
         Task<TModel> AddAsync(TModel model);
         Task<TModel> UpdateAsync(TModel model);
-        void Delete(TModel model);
+        Task Delete(TModel model);
     }
 }

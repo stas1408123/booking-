@@ -17,7 +17,9 @@ namespace Booking.BLL.Services.Generic
         {
             var entities = await GenericRepository.GetAllAsync();
 
-            return Mapper.Map<List<TEntity>, List<TModel>>(entities);
+            var models = Mapper.Map<List<TEntity>, List<TModel>>(entities);
+
+            return models;
         }
 
         public async Task<TModel> GetByIdAsync(Guid id)
@@ -29,18 +31,15 @@ namespace Booking.BLL.Services.Generic
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            return Mapper.Map<TEntity, TModel>(entity);
+            var model = Mapper.Map<TEntity, TModel>(entity);
+
+            return model;
         }
 
         public async Task<TModel> AddAsync(TModel model)
         {
             var entity = Mapper.Map<TModel, TEntity>(model);
-            var returnedEntity = await GenericRepository.AddAsync(entity);
-
-            if (returnedEntity is null)
-            {
-                throw new ArgumentNullException(nameof(returnedEntity));
-            }
+            await GenericRepository.AddAsync(entity);
 
             return model;
         }
@@ -48,20 +47,15 @@ namespace Booking.BLL.Services.Generic
         public async Task<TModel> UpdateAsync(TModel model)
         {
             var entity = Mapper.Map<TModel, TEntity>(model);
-            var returnedEntity = await GenericRepository.UpdateAsync(entity);
-
-            if (returnedEntity is null)
-            {
-                throw new ArgumentNullException(nameof(returnedEntity));
-            }
+            await GenericRepository.UpdateAsync(entity);
 
             return model;
         }
 
-        public void Delete(TModel model)
+        public async Task Delete(TModel model)
         {
             var entity = Mapper.Map<TModel, TEntity>(model);
-            GenericRepository.Delete(entity);
+            await GenericRepository.DeleteAsync(entity);
         }
     }
 }
