@@ -1,4 +1,4 @@
-﻿using Booking.DAL;
+using Booking.DAL;
 using Booking.DAL.Repositories.Generic;
 using Microsoft.EntityFrameworkCore;
 
