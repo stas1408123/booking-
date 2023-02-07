@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Booking.BLL.Models.Base;
 using Booking.BLL.Services.Generic;
-using Booking.DAL.Entities.Base;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Booking.API.Controllers
@@ -9,7 +8,7 @@ namespace Booking.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class GenericController<TEntity, TModel, TViewModel> : ControllerBase
-        where TEntity : BaseEntity
+        where TEntity : class
         where TModel : BaseModel
         where TViewModel : class
     {

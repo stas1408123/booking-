@@ -3,7 +3,7 @@
 namespace Booking.DAL.Repositories.Generic
 {
     public interface IGenericRepository<TEntity> 
-        where TEntity : BaseEntity
+        where TEntity : class
     {
         Task<List<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(Guid id);
