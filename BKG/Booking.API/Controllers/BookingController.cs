@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Booking.API.Controllers
 {
-    public class BookingController : GenericController<BookingEntity, BookingModel, BookingViewModel>
+    public class BookingController : GenericController<BookingModel, BookingViewModel>
     {
-        public BookingController(IGenericService<BookingEntity, BookingModel> genericService,
+        public BookingController(IGenericService<BookingModel> genericService,
             IMapper mapper) : base(genericService, mapper) { }
     }
 }

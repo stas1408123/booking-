@@ -2,9 +2,8 @@
 
 namespace Booking.BLL.Services.Generic
 {
-    public interface IGenericService<TEntity, TModel> 
+    public interface IGenericService<TModel> 
         where TModel : BaseModel
-        where TEntity : class
     {
         Task<List<TModel>> GetAllAsync();
         Task<TModel> GetByIdAsync(Guid id);

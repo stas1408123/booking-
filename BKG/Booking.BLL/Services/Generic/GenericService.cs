@@ -5,7 +5,7 @@ using Booking.DAL.Repositories.Generic;
 
 namespace Booking.BLL.Services.Generic
 {
-    public class GenericService<TEntity, TModel> : BaseService<TEntity>, IGenericService<TEntity, TModel>
+    public class GenericService<TEntity, TModel> : BaseService<TEntity>, IGenericService<TModel>
         where TEntity : class
         where TModel : BaseModel
     {

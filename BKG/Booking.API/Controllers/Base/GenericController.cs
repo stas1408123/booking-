@@ -7,15 +7,14 @@ namespace Booking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GenericController<TEntity, TModel, TViewModel> : ControllerBase
-        where TEntity : class
+    public class GenericController<TModel, TViewModel> : ControllerBase
         where TModel : BaseModel
         where TViewModel : class
     {
-        protected IGenericService<TEntity, TModel> GenericService;
+        protected IGenericService<TModel> GenericService;
         protected IMapper Mapper;
 
-        public GenericController(IGenericService<TEntity, TModel> genericService,
+        public GenericController(IGenericService<TModel> genericService,
             IMapper mapper)
         {
             GenericService = genericService;
