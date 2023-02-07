@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
+using Booking.BLL.Models.Base;
 using Booking.BLL.Services.Base;
 using Booking.DAL.Entities.Base;
 using Booking.DAL.Repositories.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Booking.BLL.Services.Generic
 {
     public class GenericService<TEntity, TModel> : Service<TEntity, TModel>, IGenericService<TEntity, TModel>
         where TEntity : BaseEntity
-        where TModel : class
+        where TModel : BaseModel
     {
         public GenericService(IGenericRepository<TEntity> repository, IMapper mapper) : base(repository, mapper)
         {
@@ -39,6 +41,8 @@ namespace Booking.BLL.Services.Generic
         public async Task<TModel> AddAsync(TModel model)
         {
             var entity = Mapper.Map<TModel, TEntity>(model);
+            entity.Id = Guid.NewGuid();
+
             var createdEntity = await GenericRepository.AddAsync(entity);
             var createdModel = Mapper.Map<TEntity, TModel>(createdEntity);
 
@@ -53,10 +57,9 @@ namespace Booking.BLL.Services.Generic
             return model;
         }
 
-        public async Task Delete(TModel model)
+        public async Task DeleteAsync(Guid id)
         {
-            var entity = Mapper.Map<TModel, TEntity>(model);
-            await GenericRepository.DeleteAsync(entity);
+            await GenericRepository.DeleteAsync(id);
         }
     }
 }

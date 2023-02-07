@@ -41,8 +41,9 @@ namespace Booking.DAL.Repositories.Generic
             return entity;
         }
 
-        public async Task DeleteAsync(TEntity entity)
+        public async Task DeleteAsync(Guid id)
         {
+            var entity = await DbSet.FindAsync(id);
             DbSet.Remove(entity);
             await DbContext.SaveChangesAsync();
         }

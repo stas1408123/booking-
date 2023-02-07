@@ -1,10 +1,9 @@
-﻿using Booking.DAL.Entities;
+﻿using Booking.BLL.Models.Base;
 
 namespace Booking.BLL.Models
 {
-    public class HotelModel
+    public class HotelModel : BaseModel
     {
-        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }

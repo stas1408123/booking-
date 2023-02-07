@@ -1,10 +1,9 @@
-﻿using Booking.DAL.Entities;
+﻿using Booking.BLL.Models.Base;
 
 namespace Booking.BLL.Models
 {
-    public class BookingModel
+    public class BookingModel : BaseModel
     {
-        public Guid Id { get; set; }
         public decimal Price { get; set; }
         public DateTime BookingFrom { get; set; }
         public DateTime BookingTo { get; set; }
