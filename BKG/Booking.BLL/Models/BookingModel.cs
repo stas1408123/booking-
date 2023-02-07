@@ -10,6 +10,7 @@ namespace Booking.BLL.Models
         public DateTime BookingTo { get; set; }
         public string? Description { get; set; }
 
-        public HotelEntity HotelId { get; set; }
+        public Guid HotelId { get; set; }
+        public HotelModel Hotel { get; set; }
     }
 }

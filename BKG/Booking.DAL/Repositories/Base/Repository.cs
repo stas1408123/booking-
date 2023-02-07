@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Booking.DAL.Repositories.Base
 {
-    public class Repository<TEntity> 
+    public abstract class Repository<TEntity> 
         where TEntity : BaseEntity
     {
         protected readonly BookingDbContext DbContext;
