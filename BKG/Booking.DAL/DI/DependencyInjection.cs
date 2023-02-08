@@ -1,4 +1,5 @@
-﻿using Booking.DAL.Repositories.Generic;
+﻿using Booking.DAL.Repositories.Booking;
+using Booking.DAL.Repositories.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ namespace Booking.DAL.DI
             services.AddDbContext<BookingDbContext>(opt =>
                 opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IBookingRepository, BookingRepository>();
         }
     }
 }
