@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Booking.API.ViewModels;
+using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
-using Booking.BLL.Services.Booking;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Booking.API.Controllers

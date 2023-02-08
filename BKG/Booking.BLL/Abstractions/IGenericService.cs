@@ -1,6 +1,6 @@
-﻿using Booking.BLL.Models.Base;
+﻿using Booking.BLL.Models;
 
-namespace Booking.BLL.Services.Generic
+namespace Booking.BLL.Abstractions
 {
     public interface IGenericService<TModel> 
         where TModel : BaseModel

@@ -1,4 +1,4 @@
-﻿namespace Booking.DAL.Repositories.Generic
+﻿namespace Booking.DAL.Abstractions
 {
     public interface IGenericRepository<TEntity> 
         where TEntity : class

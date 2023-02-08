@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Booking.DAL.Repositories.Base
+namespace Booking.DAL.Repositories
 {
     public abstract class BaseRepository<TEntity> 
         where TEntity : class

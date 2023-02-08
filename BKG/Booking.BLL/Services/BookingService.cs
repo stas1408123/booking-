@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
+using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
-using Booking.BLL.Services.Generic;
+using Booking.DAL.Abstractions;
 using Booking.DAL.Entities;
-using Booking.DAL.Repositories.Booking;
-using Booking.DAL.Repositories.Generic;
 
-namespace Booking.BLL.Services.Booking
+namespace Booking.BLL.Services
 {
     public class BookingService : GenericService<BookingEntity, BookingModel>, IBookingService
     {

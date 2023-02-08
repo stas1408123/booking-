@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Booking.BLL.Models.Base;
-using Booking.BLL.Services.Base;
-using Booking.DAL.Repositories.Generic;
+using Booking.BLL.Abstractions;
+using Booking.BLL.Models;
+using Booking.DAL.Abstractions;
 
-namespace Booking.BLL.Services.Generic
+namespace Booking.BLL.Services
 {
     public class GenericService<TEntity, TModel> : BaseService<TEntity>, IGenericService<TModel>
         where TEntity : class

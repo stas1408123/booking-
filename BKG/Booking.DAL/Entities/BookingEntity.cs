@@ -1,6 +1,4 @@
-﻿using Booking.DAL.Entities.Base;
-
-namespace Booking.DAL.Entities
+﻿namespace Booking.DAL.Entities
 {
     public class BookingEntity : BaseEntity
     {

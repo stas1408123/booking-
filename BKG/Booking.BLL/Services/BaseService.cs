@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Booking.DAL.Repositories.Generic;
+using Booking.DAL.Abstractions;
 
-namespace Booking.BLL.Services.Base
+namespace Booking.BLL.Services
 {
     public abstract class BaseService<TEntity>
         where TEntity : class

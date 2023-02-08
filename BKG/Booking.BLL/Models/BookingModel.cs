@@ -1,6 +1,4 @@
-﻿using Booking.BLL.Models.Base;
-
-namespace Booking.BLL.Models
+﻿namespace Booking.BLL.Models
 {
     public class BookingModel : BaseModel
     {

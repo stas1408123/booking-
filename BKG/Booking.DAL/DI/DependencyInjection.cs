@@ -1,5 +1,5 @@
-﻿using Booking.DAL.Repositories.Booking;
-using Booking.DAL.Repositories.Generic;
+﻿using Booking.DAL.Abstractions;
+using Booking.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

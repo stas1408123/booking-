@@ -1,7 +1,6 @@
 ﻿using Booking.DAL.Entities;
-using Booking.DAL.Repositories.Generic;
 
-namespace Booking.DAL.Repositories.Booking
+namespace Booking.DAL.Abstractions
 {
     public interface IBookingRepository : IGenericRepository<BookingEntity>
     {
