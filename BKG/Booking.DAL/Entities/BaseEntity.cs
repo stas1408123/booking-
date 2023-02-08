@@ -1,4 +1,4 @@
-﻿namespace Booking.DAL.Entities.Base
+﻿namespace Booking.DAL.Entities
 {
     public class BaseEntity
     {

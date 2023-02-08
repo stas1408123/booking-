@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Booking.API.ViewModels;
+using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
-using Booking.BLL.Services.Generic;
 
 namespace Booking.API.Controllers
 {

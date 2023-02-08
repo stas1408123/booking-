@@ -1,8 +1,8 @@
-﻿using Booking.DAL.Entities.Base;
-using Booking.DAL.Repositories.Base;
+﻿using Booking.DAL.Abstractions;
+using Booking.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.DAL.Repositories.Generic
+namespace Booking.DAL.Repositories
 {
     public class GenericRepository<TEntity> : BaseRepository<TEntity>, IGenericRepository<TEntity>
         where TEntity : BaseEntity

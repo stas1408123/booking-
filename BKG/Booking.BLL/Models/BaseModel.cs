@@ -1,4 +1,4 @@
-﻿namespace Booking.BLL.Models.Base
+﻿namespace Booking.BLL.Models
 {
     public class BaseModel 
     {
