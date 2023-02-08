@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Booking.DAL.Repositories.Generic
 {
-    public class GenericRepository<TEntity> : Repository<TEntity>, IGenericRepository<TEntity>
+    public class GenericRepository<TEntity> : BaseRepository<TEntity>, IGenericRepository<TEntity>
         where TEntity : BaseEntity
     {
         public GenericRepository(BookingDbContext dbContext) : base(dbContext)
@@ -19,9 +19,7 @@ namespace Booking.DAL.Repositories.Generic
 
         public async Task<TEntity> GetByIdAsync(Guid id)
         {
-            return await DbSet.AsNoTracking()
-                .FirstOrDefaultAsync(e => e.Id
-                    .Equals(id));
+            return await DbSet.FindAsync(id);
         }
 
 
@@ -41,8 +39,9 @@ namespace Booking.DAL.Repositories.Generic
             return entity;
         }
 
-        public async Task DeleteAsync(TEntity entity)
+        public async Task DeleteAsync(Guid id)
         {
+            var entity = await DbSet.FindAsync(id);
             DbSet.Remove(entity);
             await DbContext.SaveChangesAsync();
         }
