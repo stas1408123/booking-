@@ -29,7 +29,7 @@ namespace Booking.BLL.Services
 
             if (entity is null)
             {
-                throw new ArgumentNullException(nameof(entity));
+                throw new Exception($"Cannot find {typeof(TModel).Name} by id: {id}");
             }
 
             var model = Mapper.Map<TEntity, TModel>(entity);
