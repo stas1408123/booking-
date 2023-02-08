@@ -2,9 +2,7 @@ using Booking.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDataAccessDependencies(builder.Configuration);
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddApiAccessDependencies(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
