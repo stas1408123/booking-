@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Booking.BLL.Models;
-using Booking.BLL.Services.Booking;
 using Booking.BLL.Services.Generic;
 using Booking.DAL.Entities;
 using Booking.DAL.Repositories.Booking;
@@ -13,11 +12,7 @@ namespace Booking.BLL.Services.Booking
         private readonly IBookingRepository _bookingRepository;
 
         public BookingService(IGenericRepository<BookingEntity> repository,
-            IMapper mapper,
-            IBookingRepository bookingRepository) : base(repository, mapper)
-        {
-            _bookingRepository = bookingRepository;
-        }
+            IMapper mapper) : base(repository, mapper) { }
 
         public async Task<List<BookingModel>> GetParticularBookingsAsync(Guid hotelId, DateTime bookingFrom, DateTime bookingTo)
         {

@@ -2,7 +2,6 @@
 using Booking.BLL.Models;
 using Booking.BLL.Services.Booking;
 using Booking.BLL.Services.Generic;
-using Booking.BLL.Services.Booking;
 using Booking.DAL.DI;
 using Booking.DAL.Entities;
 using Microsoft.Extensions.Configuration;

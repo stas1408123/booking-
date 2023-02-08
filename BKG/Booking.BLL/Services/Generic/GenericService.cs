@@ -9,7 +9,8 @@ namespace Booking.BLL.Services.Generic
         where TEntity : class
         where TModel : BaseModel
     {
-        public GenericService(IGenericRepository<TEntity> repository, IMapper mapper) : base(repository, mapper)
+        public GenericService(IGenericRepository<TEntity> repository,
+            IMapper mapper) : base(repository, mapper)
         {
         }
 

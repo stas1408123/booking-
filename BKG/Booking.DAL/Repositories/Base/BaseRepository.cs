@@ -1,5 +1,4 @@
-﻿using Booking.DAL.Entities.Base;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Booking.DAL.Repositories.Base
 {

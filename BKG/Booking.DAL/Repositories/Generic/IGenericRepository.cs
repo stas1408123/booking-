@@ -1,6 +1,4 @@
-﻿using Booking.DAL.Entities.Base;
-
-namespace Booking.DAL.Repositories.Generic
+﻿namespace Booking.DAL.Repositories.Generic
 {
     public interface IGenericRepository<TEntity> 
         where TEntity : class
