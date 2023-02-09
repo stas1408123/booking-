@@ -1,7 +1,6 @@
-﻿namespace Booking.BLL.Models
+﻿namespace Booking.BLL.Models;
+
+public class BaseModel
 {
-    public class BaseModel 
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

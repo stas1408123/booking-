@@ -2,13 +2,12 @@
 using Booking.API.ViewModels;
 using Booking.BLL.Models;
 
-namespace Booking.API.Mapping
+namespace Booking.API.Mapping;
+
+public class HotelViewModelMapping : Profile
 {
-    public class HotelViewModelMapping : Profile
+    public HotelViewModelMapping()
     {
-        public HotelViewModelMapping()
-        {
-            CreateMap<HotelViewModel, HotelModel>().ReverseMap();
-        }
+        CreateMap<HotelViewModel, HotelModel>().ReverseMap();
     }
 }

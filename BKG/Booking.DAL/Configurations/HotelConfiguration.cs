@@ -2,29 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Booking.DAL.Configurations
+namespace Booking.DAL.Configurations;
+
+public class HotelConfiguration : IEntityTypeConfiguration<HotelEntity>
 {
-    public class HotelConfiguration : IEntityTypeConfiguration<HotelEntity>
+    public void Configure(EntityTypeBuilder<HotelEntity> builder)
     {
-        public void Configure(EntityTypeBuilder<HotelEntity> builder)
-        {
-            builder.HasKey(hotel => hotel.Id);
+        builder.HasKey(hotel => hotel.Id);
 
-            builder.HasMany(hotel => hotel.Bookings)
-                .WithOne(booking => booking.Hotel)
-                .HasForeignKey(booking => booking.HotelId)
-                .OnDelete(DeleteBehavior.Restrict);
+        builder.HasMany(hotel => hotel.Bookings)
+            .WithOne(booking => booking.Hotel)
+            .HasForeignKey(booking => booking.HotelId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasIndex(hotel => hotel.Title)
-                .IsUnique();
+        builder.HasIndex(hotel => hotel.Title)
+            .IsUnique();
 
-            builder.HasIndex(hotel => hotel.Address)
-                .IsUnique();
+        builder.HasIndex(hotel => hotel.Address)
+            .IsUnique();
 
-            builder.HasIndex(hotel => hotel.PhoneNumber)
-                .IsUnique();
+        builder.HasIndex(hotel => hotel.PhoneNumber)
+            .IsUnique();
 
-            builder.HasData(new HotelEntity
+        builder.HasData(new HotelEntity
             {
                 Id = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2"),
                 Title = "GYM HOTEL",
@@ -35,7 +35,7 @@ namespace Booking.DAL.Configurations
                 CountRooms = 125,
                 PhoneNumber = "+375336869225",
                 Address = "Nvm"
-            }, 
+            },
             new HotelEntity
             {
                 Id = Guid.Parse("60e6d76a-9c13-488b-afce-a3b21dbc3177"),
@@ -48,6 +48,5 @@ namespace Booking.DAL.Configurations
                 PhoneNumber = "+123456802232",
                 Address = "Idk"
             });
-        }
     }
 }

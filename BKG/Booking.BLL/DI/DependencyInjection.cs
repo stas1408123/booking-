@@ -7,17 +7,16 @@ using Booking.DAL.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Booking.BLL.DI
+namespace Booking.BLL.DI;
+
+public static class DependencyInjection
 {
-    public static class DependencyInjection
+    public static void AddBusinessAccessDependencies(this IServiceCollection services, IConfiguration configuration)
     {
-        public static void AddBusinessAccessDependencies(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddTransient<IGenericService<HotelModel>, GenericService<HotelEntity, HotelModel>>();
-            services.AddTransient<IGenericService<BookingModel>, GenericService<BookingEntity, BookingModel>>();
-            services.AddTransient<IBookingService, BookingService>();
-            services.AddAutoMapper(typeof(BookingModelMapping).Assembly);
-            services.AddDataAccessDependencies(configuration);
-        }
+        services.AddTransient<IGenericService<HotelModel>, GenericService<HotelEntity, HotelModel>>();
+        services.AddTransient<IGenericService<BookingModel>, GenericService<BookingEntity, BookingModel>>();
+        services.AddTransient<IBookingService, BookingService>();
+        services.AddAutoMapper(typeof(BookingModelMapping).Assembly);
+        services.AddDataAccessDependencies(configuration);
     }
 }

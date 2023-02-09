@@ -2,22 +2,21 @@
 using Booking.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Booking.DAL
+namespace Booking.DAL;
+
+public class BookingDbContext : DbContext
 {
-    public class BookingDbContext : DbContext
+    public BookingDbContext(DbContextOptions<BookingDbContext> options) : base(options)
     {
-        public DbSet<HotelEntity> Hotels { get; set; }
-        public DbSet<BookingEntity> Bookings { get; set; }
+        Database.EnsureCreated();
+    }
 
-        public BookingDbContext(DbContextOptions<BookingDbContext> options) : base(options)
-        {
-            Database.EnsureCreated();
-        }
+    public DbSet<HotelEntity> Hotels { get; set; }
+    public DbSet<BookingEntity> Bookings { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-        }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
