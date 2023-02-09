@@ -1,7 +1,6 @@
-﻿namespace Booking.DAL.Entities
+﻿namespace Booking.DAL.Entities;
+
+public class BaseEntity
 {
-    public class BaseEntity
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

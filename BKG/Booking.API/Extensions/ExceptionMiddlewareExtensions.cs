@@ -1,36 +1,35 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using System.Net;
+﻿using System.Net;
 using Booking.API.ViewModels;
+using Microsoft.AspNetCore.Diagnostics;
 
-namespace Booking.API.Extensions
+namespace Booking.API.Extensions;
+
+public static class ExceptionMiddlewareExtensions
 {
-    public static class ExceptionMiddlewareExtenstions
+    public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILogger logger)
     {
-        public static void ConfigureExceptionHandler(this IApplicationBuilder app, ILogger logger)
+        app.UseExceptionHandler(async appError =>
         {
-            app.UseExceptionHandler(async appError =>
+            appError.Run(async context =>
             {
-                appError.Run(async context =>
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                context.Response.ContentType = "application/json";
+
+                var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                if (contextFeature != null)
                 {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    context.Response.ContentType = "application/json";
+                    logger.LogError($"Something went wrong: {contextFeature.Error.Message} \n" +
+                                    $"Error path: {context.Request.Path} \n" +
+                                    $"Stack Trace: {contextFeature.Error.StackTrace}");
 
-                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                    if (contextFeature != null)
+                    await context.Response.WriteAsync(new ErrorViewModel
                     {
-                        logger.LogError($"Something went wrong: {contextFeature.Error.Message} \n" +
-                                        $"Error path: {context.Request.Path} \n" +
-                                        $"Stack Trace: {contextFeature.Error.StackTrace}");
-
-                        await context.Response.WriteAsync(new ErrorViewModel
-                        {
-                            StatusCode = context.Response.StatusCode,
-                            Message = "Internal Server Error",
-                            Path = context.Request.Path,
-                        }.ToString());
-                    }
-                });
+                        StatusCode = context.Response.StatusCode,
+                        Message = "Internal Server Error",
+                        Path = context.Request.Path
+                    }.ToString());
+                }
             });
-        }
+        });
     }
 }

@@ -2,13 +2,12 @@
 using Booking.BLL.Models;
 using Booking.DAL.Entities;
 
-namespace Booking.BLL.Mapping
+namespace Booking.BLL.Mapping;
+
+public class BookingModelMapping : Profile
 {
-    public class BookingModelMapping : Profile
+    public BookingModelMapping()
     {
-        public BookingModelMapping()
-        {
-            CreateMap<BookingModel, BookingEntity>().ReverseMap();
-        }
+        CreateMap<BookingModel, BookingEntity>().ReverseMap();
     }
 }
