@@ -20,11 +20,15 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: cd to folder
-      run: cd ./booking-/BKG
     - name: Restore dependencies
-      run: dotnet restore
+      run: |
+           cd ./booking-
+           dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: |
+           cd ./booking-
+           dotnet build --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: |
+           cd ./booking-
+           dotnet test --no-build --verbosity normal
