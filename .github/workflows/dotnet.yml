@@ -22,13 +22,13 @@ jobs:
         dotnet-version: 7.0.x
     - name: Restore dependencies
       run: |
-           cd ./booking-/BKG
+           cd ./BKG
            dotnet restore
     - name: Build
       run: |
-           cd ./booking-/BKG
+           cd ./BKG
            dotnet build --no-restore
     - name: Test
       run: |
-           cd ./booking-/BKG
+           cd ./BKG
            dotnet test --no-build --verbosity normal
