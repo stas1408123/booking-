@@ -27,7 +27,7 @@ public class GenericService<TEntity, TModel> : BaseService<TEntity>, IGenericSer
     {
         var entity = await GenericRepository.GetByIdAsync(id);
 
-        if (entity is null) throw new Exception($"Cannot find {typeof(TModel).Name} by id: {id}");
+        if (entity is null) throw new ArgumentNullException($"Cannot find {typeof(TModel).Name} by id: {id}");
 
         var model = Mapper.Map<TEntity, TModel>(entity);
 

@@ -17,7 +17,7 @@ public class GenericRepository<TEntity> : BaseRepository<TEntity>, IGenericRepos
             .ToListAsync();
     }
 
-    public async Task<TEntity> GetByIdAsync(Guid id)
+    public async Task<TEntity?> GetByIdAsync(Guid id)
     {
         return await DbSet.FindAsync(id);
     }
@@ -42,7 +42,7 @@ public class GenericRepository<TEntity> : BaseRepository<TEntity>, IGenericRepos
     public async Task DeleteAsync(Guid id)
     {
         var entity = await DbSet.FindAsync(id);
-        DbSet.Remove(entity);
+        if (entity != null) DbSet.Remove(entity);
         await DbContext.SaveChangesAsync();
     }
 }

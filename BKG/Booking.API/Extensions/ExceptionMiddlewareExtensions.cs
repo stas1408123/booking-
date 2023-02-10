@@ -18,9 +18,9 @@ public static class ExceptionMiddlewareExtensions
                 var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                 if (contextFeature != null)
                 {
-                    logger.LogError($"Something went wrong: {contextFeature.Error.Message} \n" +
-                                    $"Error path: {context.Request.Path} \n" +
-                                    $"Stack Trace: {contextFeature.Error.StackTrace}");
+                    logger.LogError("Something went wrong: {error} \n", contextFeature.Error.Message);
+                    logger.LogError("Error path: {path}", context.Request.Path);
+                    logger.LogError("Stack Trace: {trace}", contextFeature.Error.StackTrace);
 
                     await context.Response.WriteAsync(new ErrorViewModel
                     {

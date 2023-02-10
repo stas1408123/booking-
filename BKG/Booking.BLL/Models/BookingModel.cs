@@ -8,5 +8,5 @@ public class BookingModel : BaseModel
     public string? Description { get; set; }
 
     public Guid HotelId { get; set; }
-    public HotelModel Hotel { get; set; }
+    public HotelModel? Hotel { get; set; }
 }

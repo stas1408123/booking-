@@ -10,12 +10,12 @@ public class BookingRepository : GenericRepository<BookingEntity>, IBookingRepos
     {
     }
 
-    public async Task<List<BookingEntity>> GetParticularBookingsAsync(Guid hotelId, DateTime bookingFrom,
-        DateTime bookingTo)
+    public async Task<List<BookingEntity>> GetParticularBookingsAsync(Guid hotelId, DateTime searchFrom,
+        DateTime searchTo)
     {
         return await DbSet.Where(b => b.HotelId == hotelId)
-            .Where(b => b.BookingFrom >= bookingFrom)
-            .Where(b => b.BookingTo <= bookingTo)
+            .Where(b => b.BookingFrom >= searchFrom)
+            .Where(b => b.BookingTo <= searchTo)
             .ToListAsync();
     }
 }

@@ -8,7 +8,7 @@ public abstract class BaseRepository<TEntity>
     protected readonly BookingDbContext DbContext;
     protected DbSet<TEntity> DbSet;
 
-    public BaseRepository(BookingDbContext dbContext)
+    protected BaseRepository(BookingDbContext dbContext)
     {
         DbContext = dbContext;
         DbSet = dbContext.Set<TEntity>();

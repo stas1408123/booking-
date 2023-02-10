@@ -11,14 +11,16 @@ public class BookingService : GenericService<BookingEntity, BookingModel>, IBook
     private readonly IBookingRepository _bookingRepository;
 
     public BookingService(IGenericRepository<BookingEntity> repository,
-        IMapper mapper) : base(repository, mapper)
+        IMapper mapper,
+        IBookingRepository bookingRepository) : base(repository, mapper)
     {
+        _bookingRepository = bookingRepository;
     }
 
-    public async Task<List<BookingModel>> GetParticularBookingsAsync(Guid hotelId, DateTime bookingFrom,
-        DateTime bookingTo)
+    public async Task<List<BookingModel>> GetParticularBookingsAsync(Guid hotelId, DateTime searchFrom,
+        DateTime searchTo)
     {
-        var bookingEntities = await _bookingRepository.GetParticularBookingsAsync(hotelId, bookingFrom, bookingTo);
+        var bookingEntities = await _bookingRepository.GetParticularBookingsAsync(hotelId, searchFrom, searchTo);
         var bookingModels = Mapper.Map<List<BookingEntity>, List<BookingModel>>(bookingEntities);
 
         return bookingModels;
