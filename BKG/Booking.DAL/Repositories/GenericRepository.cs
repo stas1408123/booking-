@@ -43,6 +43,7 @@ public class GenericRepository<TEntity> : BaseRepository<TEntity>, IGenericRepos
     {
         var entity = await DbSet.FindAsync(id);
         if (entity != null) DbSet.Remove(entity);
+
         await DbContext.SaveChangesAsync();
     }
 }
