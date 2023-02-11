@@ -8,5 +8,5 @@ public class BookingEntity : BaseEntity
     public string? Description { get; set; }
 
     public Guid HotelId { get; set; }
-    public HotelEntity Hotel { get; set; }
+    public HotelEntity? Hotel { get; set; }
 }

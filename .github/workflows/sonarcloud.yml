@@ -42,6 +42,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"stas1408123_booking-" /o:"stas1408123" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"stas1408123_booking-" /o:"stas1408123" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.coverage.exclusions="**/*" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build ./BKG/BKG.sln
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
