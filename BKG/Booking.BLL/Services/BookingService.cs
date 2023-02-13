@@ -20,6 +20,9 @@ public class BookingService : GenericService<BookingEntity, BookingModel>, IBook
     public async Task<List<BookingModel>> GetParticularBookingsAsync(Guid hotelId, DateTime searchFrom,
         DateTime searchTo)
     {
+        if (searchFrom > searchTo)
+            throw new ArgumentException("Booking from date cannot get ahead of time booking to date");
+
         var bookingEntities = await _bookingRepository.GetParticularBookingsAsync(hotelId, searchFrom, searchTo);
         var bookingModels = Mapper.Map<List<BookingEntity>, List<BookingModel>>(bookingEntities);
 

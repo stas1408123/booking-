@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Booking.API.Controllers;
@@ -13,12 +14,15 @@ public class GenericController<TModel, TViewModel> : ControllerBase
 {
     protected IGenericService<TModel> GenericService;
     protected IMapper Mapper;
+    protected IValidator<TViewModel> Validator;
 
     public GenericController(IGenericService<TModel> genericService,
-        IMapper mapper)
+        IMapper mapper,
+        IValidator<TViewModel> validator)
     {
         GenericService = genericService;
         Mapper = mapper;
+        Validator = validator;
     }
 
     [HttpGet]
@@ -41,6 +45,8 @@ public class GenericController<TModel, TViewModel> : ControllerBase
     [HttpPost("add")]
     public async Task<IActionResult> Add(TViewModel viewModel)
     {
+        await Validator.ValidateAndThrowAsync(viewModel);
+
         var model = Mapper.Map<TViewModel, TModel>(viewModel);
         await GenericService.AddAsync(model);
 
@@ -50,6 +56,8 @@ public class GenericController<TModel, TViewModel> : ControllerBase
     [HttpPut("update")]
     public async Task<IActionResult> Update(Guid id, TViewModel viewModel)
     {
+        await Validator.ValidateAndThrowAsync(viewModel);
+
         var model = Mapper.Map<TViewModel, TModel>(viewModel);
         model.Id = id;
         await GenericService.UpdateAsync(model);
