@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Booking.API.Validators;
 
-public class GetParticularBookingsValidator : AbstractValidator<GetParticularBookingsViewModel>
+public class GetParticularBookingsValidator : AbstractValidator<BookingViewModel>
 {
     public GetParticularBookingsValidator()
     {

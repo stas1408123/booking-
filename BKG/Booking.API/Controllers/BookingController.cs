@@ -26,22 +26,9 @@ public class BookingController : ControllerBase
     }
 
     [HttpPost("get-particular-bookings")]
-    public async Task<IActionResult> GetParticularBookings(GetParticularBookingsViewModel viewModel,
-        IValidator<GetParticularBookingsViewModel> validator)
+    public async Task<IActionResult> GetParticularBookings(BookingViewModel viewModel)
     {
-        var result = await validator.ValidateAsync(viewModel);
-
-        if (!result.IsValid)
-        {
-            var modelStateDictionary = new ModelStateDictionary();
-
-            foreach (var failure in result.Errors)
-                modelStateDictionary.AddModelError(
-                    failure.PropertyName,
-                    failure.ErrorMessage);
-
-            return ValidationProblem(modelStateDictionary);
-        }
+        await _validator.ValidateAndThrowAsync(viewModel);
 
         var bookingsModels =
             await _bookingService.GetParticularBookingsAsync(viewModel.HotelId, viewModel.BookingFrom,
@@ -71,19 +58,7 @@ public class BookingController : ControllerBase
     [HttpPost("add")]
     public async Task<IActionResult> Add(BookingViewModel viewModel)
     {
-        var result = await _validator.ValidateAsync(viewModel);
-
-        if (!result.IsValid)
-        {
-            var modelStateDictionary = new ModelStateDictionary();
-
-            foreach (var failure in result.Errors)
-                modelStateDictionary.AddModelError(
-                    failure.PropertyName,
-                    failure.ErrorMessage);
-
-            return ValidationProblem(modelStateDictionary);
-        }
+        await _validator.ValidateAndThrowAsync(viewModel);
 
         var model = _mapper.Map<BookingModel>(viewModel);
         await _bookingService.AddAsync(model);
@@ -94,19 +69,7 @@ public class BookingController : ControllerBase
     [HttpPut("update")]
     public async Task<IActionResult> Update(Guid id, BookingViewModel viewModel)
     {
-        var result = await _validator.ValidateAsync(viewModel);
-
-        if (!result.IsValid)
-        {
-            var modelStateDictionary = new ModelStateDictionary();
-
-            foreach (var failure in result.Errors)
-                modelStateDictionary.AddModelError(
-                    failure.PropertyName,
-                    failure.ErrorMessage);
-
-            return ValidationProblem(modelStateDictionary);
-        }
+        await _validator.ValidateAndThrowAsync(viewModel);
 
         var model = _mapper.Map<BookingModel>(viewModel);
         model.Id = id;

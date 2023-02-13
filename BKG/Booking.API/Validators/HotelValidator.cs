@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Booking.API.ViewModels;
+﻿using Booking.API.ViewModels;
 using FluentValidation;
 
 namespace Booking.API.Validators;
@@ -27,6 +26,6 @@ public class HotelValidator : AbstractValidator<HotelViewModel>
             .NotNull().NotEmpty().WithMessage("Phone number is required")
             .MinimumLength(10).WithMessage("Phone number length cannot be less than 10 numbers")
             .MaximumLength(20).WithMessage("Phone number length cannot be more than 20 numbers")
-            .Matches(new Regex(@"^\+\d{10}")).WithMessage("Phone number is not valid");
+            .Matches(@"^\+\d{10}").WithMessage("Phone number is not valid");
     }
 }
