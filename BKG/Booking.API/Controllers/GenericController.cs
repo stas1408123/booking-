@@ -3,7 +3,6 @@ using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Booking.API.Controllers;
 
