@@ -2,7 +2,9 @@
 using Booking.API.ViewModels;
 using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Booking.API.Controllers;
 
@@ -12,18 +14,38 @@ public class BookingController : ControllerBase
 {
     private readonly IBookingService _bookingService;
     private readonly IMapper _mapper;
+    private readonly IValidator<BookingViewModel> _validator;
 
     public BookingController(IMapper mapper,
-        IBookingService bookingService)
+        IBookingService bookingService,
+        IValidator<BookingViewModel> validator)
     {
         _bookingService = bookingService;
         _mapper = mapper;
+        _validator = validator;
     }
 
-    [HttpGet("get-particular-bookings")]
-    public async Task<IActionResult> GetParticularBookings(Guid hotelId, DateTime bookingFrom, DateTime bookingTo)
+    [HttpPost("get-particular-bookings")]
+    public async Task<IActionResult> GetParticularBookings(GetParticularBookingsViewModel viewModel,
+        IValidator<GetParticularBookingsViewModel> validator)
     {
-        var bookingsModels = await _bookingService.GetParticularBookingsAsync(hotelId, bookingFrom, bookingTo);
+        var result = await validator.ValidateAsync(viewModel);
+
+        if (!result.IsValid)
+        {
+            var modelStateDictionary = new ModelStateDictionary();
+
+            foreach (var failure in result.Errors)
+                modelStateDictionary.AddModelError(
+                    failure.PropertyName,
+                    failure.ErrorMessage);
+
+            return ValidationProblem(modelStateDictionary);
+        }
+
+        var bookingsModels =
+            await _bookingService.GetParticularBookingsAsync(viewModel.HotelId, viewModel.BookingFrom,
+                viewModel.BookingTo);
         var bookingViewModels = _mapper.Map<List<BookingModel>, List<BookingViewModel>>(bookingsModels);
 
         return Ok(bookingViewModels);
@@ -49,6 +71,20 @@ public class BookingController : ControllerBase
     [HttpPost("add")]
     public async Task<IActionResult> Add(BookingViewModel viewModel)
     {
+        var result = await _validator.ValidateAsync(viewModel);
+
+        if (!result.IsValid)
+        {
+            var modelStateDictionary = new ModelStateDictionary();
+
+            foreach (var failure in result.Errors)
+                modelStateDictionary.AddModelError(
+                    failure.PropertyName,
+                    failure.ErrorMessage);
+
+            return ValidationProblem(modelStateDictionary);
+        }
+
         var model = _mapper.Map<BookingModel>(viewModel);
         await _bookingService.AddAsync(model);
 
@@ -58,6 +94,20 @@ public class BookingController : ControllerBase
     [HttpPut("update")]
     public async Task<IActionResult> Update(Guid id, BookingViewModel viewModel)
     {
+        var result = await _validator.ValidateAsync(viewModel);
+
+        if (!result.IsValid)
+        {
+            var modelStateDictionary = new ModelStateDictionary();
+
+            foreach (var failure in result.Errors)
+                modelStateDictionary.AddModelError(
+                    failure.PropertyName,
+                    failure.ErrorMessage);
+
+            return ValidationProblem(modelStateDictionary);
+        }
+
         var model = _mapper.Map<BookingModel>(viewModel);
         model.Id = id;
         await _bookingService.UpdateAsync(model);
