@@ -4,7 +4,7 @@ namespace Booking.BLL.Tests.AutoData.Models;
 
 public class BookingModelData
 {
-    public static BookingModel GetBookingModel = new()
+    internal static BookingModel GetBookingModel = new()
     {
         Id = Guid.Parse("6bb0d987-4364-41c7-a873-6ffc01d7d3c1"),
         BookingFrom = DateTime.Parse("2020-01-01"),

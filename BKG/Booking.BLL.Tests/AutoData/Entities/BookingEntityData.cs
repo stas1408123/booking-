@@ -1,10 +1,19 @@
-﻿using Booking.BLL.Models;
-using Booking.DAL.Entities;
+﻿using Booking.DAL.Entities;
 
 namespace Booking.BLL.Tests.AutoData.Entities;
 
 public static class BookingEntityData
 {
+    internal static BookingEntity GetBookingEntity = new()
+    {
+        Id = Guid.Parse("6bb0d987-4364-41c7-a873-6ffc01d7d3c1"),
+        BookingFrom = DateTime.Parse("2020-01-01"),
+        BookingTo = DateTime.Parse("2025-01-01"),
+        Price = 1,
+        HotelId = Guid.Parse("c839050c-e854-414a-93ea-f558e993e75e"),
+        Description = "Uncorrect dates where BookingFrom have past date"
+    };
+
     public static List<BookingEntity> CreateBookingsList()
     {
         var bookingList = new List<BookingEntity>
@@ -107,21 +116,11 @@ public static class BookingEntityData
                 Price = 1,
                 HotelId = Guid.Parse("c839050c-e854-414a-93ea-f558e993e75e"),
                 Description = "Correct dates"
-            },
+            }
         };
 
         return bookingList;
     }
-
-    public static BookingEntity GetBookingEntity = new()
-    {
-        Id = Guid.Parse("6bb0d987-4364-41c7-a873-6ffc01d7d3c1"),
-        BookingFrom = DateTime.Parse("2020-01-01"),
-        BookingTo = DateTime.Parse("2025-01-01"),
-        Price = 1,
-        HotelId = Guid.Parse("c839050c-e854-414a-93ea-f558e993e75e"),
-        Description = "Uncorrect dates where BookingFrom have past date"
-    };
 
     public static List<BookingEntity> SortedList(Guid hotelId, DateTime bookingFrom, DateTime bookingTo)
     {
