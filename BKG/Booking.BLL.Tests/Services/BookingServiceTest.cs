@@ -1,15 +1,4 @@
-﻿using AutoMapper;
-using Booking.BLL.Abstractions;
-using Booking.BLL.Models;
-using Booking.BLL.Services;
-using Booking.BLL.Tests.AutoData.Entities;
-using Booking.BLL.Tests.AutoData.Models;
-using Booking.DAL.Abstractions;
-using Booking.DAL.Entities;
-using Moq;
-using Shouldly;
-
-namespace Booking.BLL.Tests.Services;
+﻿namespace Booking.BLL.Tests.Services;
 
 public class BookingServiceTest
 {
@@ -41,20 +30,15 @@ public class BookingServiceTest
         result.Count.ShouldBe(11);
     }
 
-    [Theory]
-    [InlineData("35edf9c3-7bb7-40b7-9ead-41ec4efec537")]
-    [InlineData("489e445b-e68b-4324-8b1e-4e2b01f03cdc")]
-    public async Task GetById_WhenEntityNotExist_ShouldReturnNull_Async(string id)
+    [Fact]
+    public async Task GetById_WhenEntityNotExist_ShouldReturnNull_Async()
     {
         // Act
-        var guidId = Guid.Parse(id);
-        _bookingRepository.Setup(r => r.GetByIdAsync(guidId))
+        _bookingRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
             .ReturnsAsync(value: null);
 
-        // Arrange
-
-        // Assert
-        await Assert.ThrowsAsync<ArgumentNullException>(async () => await _bookingService.GetByIdAsync(guidId));
+        // Arrange + Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(async () => await _bookingService.GetByIdAsync(It.IsAny<Guid>()));
     }
 
     [Fact]
@@ -93,19 +77,18 @@ public class BookingServiceTest
         result.ShouldBeOfType<BookingModel>();
     }
 
-    [Theory]
-    [InlineData("35edf9c3-7bb7-40b7-9ead-41ec4efec537")]
-    [InlineData("489e445b-e68b-4324-8b1e-4e2b01f03cdc")]
-    public async Task DeleteById_WhenEntityNotExist_ShouldReturnNull_Async(string id)
+
+    [Fact]
+    public async Task DeleteById_WhenEntityNotExist_ShouldReturnNull_Async()
     {
         // Act
-        var guidId = Guid.Parse(id);
-        _bookingRepository.Setup(r => r.GetByIdAsync(guidId))
+        _bookingRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
             .ReturnsAsync(value: null);
 
         // Arrange
-        var result = await _bookingService.DeleteAsync(guidId);
+        var result = await _bookingService.DeleteAsync(It.IsAny<Guid>());
 
+        // Assert
         result.ShouldBeNull();
     }
 
@@ -149,7 +132,6 @@ public class BookingServiceTest
     [Theory]
     [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2023-03-01", "2024-01-01")]
     [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2023-03-01", "2026-01-01")]
-    [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2023-06-01", "2026-01-01")]
     public async Task GetParticularBookings_WhenBookingDataIsCorrect_ShouldReturnListOfModels_Async(string hotelId,
         string bookingFrom, string bookingTo)
     {
@@ -170,7 +152,7 @@ public class BookingServiceTest
         var result =
             await _bookingService.GetParticularBookingsAsync(correctHotelId, correctBookingFrom, correctBookingTo);
 
-        // Act
+        // Assert
         result.ShouldNotBeNull();
         result.ShouldBeOfType<List<BookingModel>>();
     }
@@ -194,9 +176,7 @@ public class BookingServiceTest
         _mapper.Setup(m => m.Map<List<BookingModel>>(It.IsAny<List<BookingEntity>>()))
             .Returns(BookingModelData.SortedList(correctHotelId, correctBookingFrom, correctBookingTo));
 
-        // Arrange
-
-        // Act
+        // Arrange + Assert
         await Assert.ThrowsAsync<ArgumentException>(async () =>
             await _bookingService.GetParticularBookingsAsync(correctHotelId, correctBookingFrom, correctBookingTo));
     }

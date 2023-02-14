@@ -1,6 +1,4 @@
-﻿using Booking.DAL.Entities;
-
-namespace Booking.BLL.Tests.AutoData.Entities;
+﻿namespace Booking.BLL.Tests.AutoData.Entities;
 
 public static class BookingEntityData
 {

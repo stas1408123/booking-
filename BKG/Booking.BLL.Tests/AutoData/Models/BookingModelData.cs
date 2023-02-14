@@ -1,6 +1,4 @@
-﻿using Booking.BLL.Models;
-
-namespace Booking.BLL.Tests.AutoData.Models;
+﻿namespace Booking.BLL.Tests.AutoData.Models;
 
 public class BookingModelData
 {
