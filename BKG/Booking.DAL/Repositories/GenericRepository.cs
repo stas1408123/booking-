@@ -39,11 +39,13 @@ public class GenericRepository<TEntity> : BaseRepository<TEntity>, IGenericRepos
         return entity;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task<TEntity?> DeleteAsync(Guid id)
     {
         var entity = await DbSet.FindAsync(id);
         if (entity != null) DbSet.Remove(entity);
 
         await DbContext.SaveChangesAsync();
+
+        return entity;
     }
 }

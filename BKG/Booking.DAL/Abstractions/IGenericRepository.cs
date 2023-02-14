@@ -7,5 +7,5 @@ public interface IGenericRepository<TEntity>
     Task<TEntity?> GetByIdAsync(Guid id);
     Task<TEntity> AddAsync(TEntity entity);
     Task<TEntity> UpdateAsync(TEntity entity);
-    Task DeleteAsync(Guid id);
+    Task<TEntity?> DeleteAsync(Guid id);
 }

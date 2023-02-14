@@ -9,5 +9,5 @@ public interface IGenericService<TModel>
     Task<TModel> GetByIdAsync(Guid id);
     Task<TModel> AddAsync(TModel model);
     Task<TModel> UpdateAsync(TModel model);
-    Task DeleteAsync(Guid id);
+    Task<TModel> DeleteAsync(Guid id);
 }
