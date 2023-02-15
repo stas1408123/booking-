@@ -31,7 +31,7 @@ app.MapControllers();
 
 app.Run();
 
-public static class CustomExtensionsMethods
+internal static class CustomExtensionsMethods
 {
     public static IServiceCollection AddCustomCors(this IServiceCollection services)
     {
