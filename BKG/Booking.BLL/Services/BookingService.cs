@@ -16,7 +16,7 @@ public class BookingService : GenericService<BookingEntity, BookingModel>, IBook
         _bookingRepository = bookingRepository;
     }
 
-    public async Task<List<BookingModel>> GetParticularBookingsAsync(Guid hotelId, DateTime searchFrom,
+    public async Task<List<BookingModel>> GetParticularBookings(Guid hotelId, DateTime searchFrom,
         DateTime searchTo)
     {
         if (searchFrom > searchTo)
@@ -24,7 +24,7 @@ public class BookingService : GenericService<BookingEntity, BookingModel>, IBook
         if (searchFrom < DateTime.UtcNow)
             throw new ArgumentException("Booking from date cannot get past time");
 
-        var bookingEntities = await _bookingRepository.GetParticularBookingsAsync(hotelId, searchFrom, searchTo);
+        var bookingEntities = await _bookingRepository.GetParticularBookings(hotelId, searchFrom, searchTo);
         var bookingModels = Mapper.Map<List<BookingModel>>(bookingEntities);
 
         return bookingModels;

@@ -11,19 +11,19 @@ public class GenericRepository<TEntity> : BaseRepository<TEntity>, IGenericRepos
     {
     }
 
-    public async Task<List<TEntity>> GetAllAsync()
+    public async Task<List<TEntity>> GetAll()
     {
         return await DbSet.AsNoTracking()
             .ToListAsync();
     }
 
-    public async Task<TEntity?> GetByIdAsync(Guid id)
+    public async Task<TEntity?> GetById(Guid id)
     {
         return await DbSet.FindAsync(id);
     }
 
 
-    public async Task<TEntity> AddAsync(TEntity entity)
+    public async Task<TEntity> Add(TEntity entity)
     {
         await DbSet.AddAsync(entity);
         await DbContext.SaveChangesAsync();
@@ -31,7 +31,7 @@ public class GenericRepository<TEntity> : BaseRepository<TEntity>, IGenericRepos
         return entity;
     }
 
-    public async Task<TEntity> UpdateAsync(TEntity entity)
+    public async Task<TEntity> Update(TEntity entity)
     {
         DbSet.Update(entity);
         await DbContext.SaveChangesAsync();
@@ -39,7 +39,7 @@ public class GenericRepository<TEntity> : BaseRepository<TEntity>, IGenericRepos
         return entity;
     }
 
-    public async Task<TEntity?> DeleteAsync(Guid id)
+    public async Task<TEntity?> Delete(Guid id)
     {
         var entity = await DbSet.FindAsync(id);
         if (entity != null) DbSet.Remove(entity);

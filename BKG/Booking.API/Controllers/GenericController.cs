@@ -28,7 +28,7 @@ public class GenericController<TModel, TViewModel> : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var models = await GenericService.GetAllAsync();
+        var models = await GenericService.GetAll();
 
         return Ok(models);
     }
@@ -36,7 +36,7 @@ public class GenericController<TModel, TViewModel> : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var model = await GenericService.GetByIdAsync(id);
+        var model = await GenericService.GetById(id);
         var viewModel = Mapper.Map<TModel, TViewModel>(model);
 
         return Ok(viewModel);
@@ -48,7 +48,7 @@ public class GenericController<TModel, TViewModel> : ControllerBase
         await Validator.ValidateAndThrowAsync(viewModel);
 
         var model = Mapper.Map<TViewModel, TModel>(viewModel);
-        await GenericService.AddAsync(model);
+        await GenericService.Add(model);
 
         return Ok(viewModel);
     }
@@ -60,7 +60,7 @@ public class GenericController<TModel, TViewModel> : ControllerBase
 
         var model = Mapper.Map<TViewModel, TModel>(viewModel);
         model.Id = id;
-        await GenericService.UpdateAsync(model);
+        await GenericService.Update(model);
 
         return Ok(viewModel);
     }
@@ -68,7 +68,7 @@ public class GenericController<TModel, TViewModel> : ControllerBase
     [HttpDelete("delete")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        await GenericService.DeleteAsync(id);
+        await GenericService.Delete(id);
 
         return Ok();
     }

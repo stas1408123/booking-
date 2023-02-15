@@ -16,16 +16,16 @@ public class BookingServiceTest
     }
 
     [Fact]
-    public async Task GetAll_WhenEntitiesExist_ShouldReturnListOfModels_Async()
+    public async Task GetAll_WhenEntitiesExist_ShouldReturnListOfModels()
     {
         // Act
-        _bookingRepoMock.Setup(r => r.GetAllAsync())
+        _bookingRepoMock.Setup(r => r.GetAll())
             .ReturnsAsync(BookingEntityData.CreateBookingsList());
         _mapperMock.Setup(m => m.Map<List<BookingModel>>(It.IsAny<List<BookingEntity>>()))
             .Returns(BookingModelData.CreateBookingsList());
 
         // Arrange
-        var result = await _bookingService.GetAllAsync();
+        var result = await _bookingService.GetAll();
 
         // Assert
         result.Should().NotBeNull();
@@ -33,52 +33,52 @@ public class BookingServiceTest
     }
 
     [Fact]
-    public async Task GetById_WhenEntityNotExist_ShouldThrowException_Async()
+    public async Task GetById_WhenEntityNotExist_ShouldThrowException()
     {
         // Act
-        _bookingRepoMock.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
+        _bookingRepoMock.Setup(r => r.GetById(It.IsAny<Guid>()))
             .ReturnsAsync(value: null);
 
         // Arrange + Assert
         await Assert.ThrowsAsync<ArgumentNullException>(
-            async () => await _bookingService.GetByIdAsync(It.IsAny<Guid>()));
+            async () => await _bookingService.GetById(It.IsAny<Guid>()));
     }
 
     [Fact]
-    public async Task GetById_WhenEntityExist_ShouldReturnModel_Async()
+    public async Task GetById_WhenEntityExist_ShouldReturnModel()
     {
         // Act
-        _bookingRepoMock.Setup(r => r.GetByIdAsync(BookingEntityData.GetBookingEntity.Id))
+        _bookingRepoMock.Setup(r => r.GetById(BookingEntityData.GetBookingEntity.Id))
             .ReturnsAsync(BookingEntityData.GetBookingEntity);
         _mapperMock.Setup(m => m.Map<BookingModel>(It.IsAny<BookingEntity>()))
             .Returns(BookingModelData.GetBookingModel);
 
         // Arrange
-        var result = await _bookingService.GetByIdAsync(BookingEntityData.GetBookingEntity.Id);
+        var result = await _bookingService.GetById(BookingEntityData.GetBookingEntity.Id);
 
         // Act
-        _bookingRepoMock.Verify(r => r.GetByIdAsync(BookingEntityData.GetBookingEntity.Id));
+        _bookingRepoMock.Verify(r => r.GetById(BookingEntityData.GetBookingEntity.Id));
         result.Should().NotBeNull();
         result.Should().BeOfType<BookingModel>();
         result.Should().BeEquivalentTo(BookingModelData.GetBookingModel);
     }
 
     [Fact]
-    public async Task Create_WhenBookingModelIsSet_ShouldReturnCorrectModel_Async()
+    public async Task Create_WhenBookingModelIsSet_ShouldReturnCorrectModel()
     {
         // Act
         _mapperMock.Setup(m => m.Map<BookingEntity>(It.IsAny<BookingModel>()))
             .Returns(BookingEntityData.GetBookingEntity);
-        _bookingRepoMock.Setup(r => r.AddAsync(BookingEntityData.GetBookingEntity))
+        _bookingRepoMock.Setup(r => r.Add(BookingEntityData.GetBookingEntity))
             .ReturnsAsync(BookingEntityData.GetBookingEntity);
         _mapperMock.Setup(m => m.Map<BookingModel>(It.IsAny<BookingEntity>()))
             .Returns(BookingModelData.GetBookingModel);
 
         // Arrange
-        var result = await _bookingService.AddAsync(BookingModelData.GetBookingModel);
+        var result = await _bookingService.Add(BookingModelData.GetBookingModel);
 
         // Assert
-        _bookingRepoMock.Verify(r => r.AddAsync(BookingEntityData.GetBookingEntity));
+        _bookingRepoMock.Verify(r => r.Add(BookingEntityData.GetBookingEntity));
         result.Should().NotBeNull();
         result.Should().BeOfType<BookingModel>();
         result.Should().BeEquivalentTo(BookingModelData.GetBookingModel);
@@ -86,55 +86,55 @@ public class BookingServiceTest
 
 
     [Fact]
-    public async Task DeleteById_WhenEntityNotExist_ShouldReturnNull_Async()
+    public async Task DeleteById_WhenEntityNotExist_ShouldReturnNull()
     {
         // Act
-        _bookingRepoMock.Setup(r => r.DeleteAsync(It.IsAny<Guid>()))
+        _bookingRepoMock.Setup(r => r.Delete(It.IsAny<Guid>()))
             .ReturnsAsync(value: null);
 
         // Arrange
-        var result = await _bookingService.DeleteAsync(It.IsAny<Guid>());
+        var result = await _bookingService.Delete(It.IsAny<Guid>());
 
         // Assert
-        _bookingRepoMock.Verify(r => r.DeleteAsync(It.IsAny<Guid>()));
+        _bookingRepoMock.Verify(r => r.Delete(It.IsAny<Guid>()));
         result.Should().BeNull();
     }
 
     [Fact]
-    public async Task DeleteById_WhenEntityExist_ShouldReturnModel_Async()
+    public async Task DeleteById_WhenEntityExist_ShouldReturnModel()
     {
         // Act
-        _bookingRepoMock.Setup(r => r.DeleteAsync(BookingEntityData.GetBookingEntity.Id))
+        _bookingRepoMock.Setup(r => r.Delete(BookingEntityData.GetBookingEntity.Id))
             .ReturnsAsync(BookingEntityData.GetBookingEntity);
         _mapperMock.Setup(m => m.Map<BookingModel>(It.IsAny<BookingEntity>()))
             .Returns(BookingModelData.GetBookingModel);
 
         // Arrange
-        var result = await _bookingService.DeleteAsync(BookingEntityData.GetBookingEntity.Id);
+        var result = await _bookingService.Delete(BookingEntityData.GetBookingEntity.Id);
 
         // Assert
-        _bookingRepoMock.Verify(r => r.DeleteAsync(BookingEntityData.GetBookingEntity.Id));
+        _bookingRepoMock.Verify(r => r.Delete(BookingEntityData.GetBookingEntity.Id));
         result.Should().NotBeNull();
         result.Should().BeOfType<BookingModel>();
         result.Should().BeEquivalentTo(BookingModelData.GetBookingModel);
     }
 
     [Fact]
-    public async Task Update_WhenBookingModelIsSet_ShouldReturnCorrectModel_Async()
+    public async Task Update_WhenBookingModelIsSet_ShouldReturnCorrectModel()
     {
         // Act
         _mapperMock.Setup(m => m.Map<BookingEntity>(BookingModelData.GetBookingModelToUpdate))
             .Returns(BookingEntityData.GetBookingEntityToUpdate);
-        _bookingRepoMock.Setup(r => r.UpdateAsync(BookingEntityData.GetBookingEntityToUpdate))
+        _bookingRepoMock.Setup(r => r.Update(BookingEntityData.GetBookingEntityToUpdate))
             .ReturnsAsync(BookingEntityData.GetBookingEntityToUpdate);
         _mapperMock.Setup(m => m.Map<BookingModel>(BookingEntityData.GetBookingEntityToUpdate))
             .Returns(BookingModelData.GetBookingModelToUpdate);
 
         // Arrange
-        var result = await _bookingService.UpdateAsync(BookingModelData.GetBookingModelToUpdate);
+        var result = await _bookingService.Update(BookingModelData.GetBookingModelToUpdate);
 
         // Assert
-        _bookingRepoMock.Verify(r => r.UpdateAsync(BookingEntityData.GetBookingEntityToUpdate));
+        _bookingRepoMock.Verify(r => r.Update(BookingEntityData.GetBookingEntityToUpdate));
         result.Should().NotBeNull();
         result.Should().BeOfType<BookingModel>();
         result.Should().NotBeEquivalentTo(BookingModelData.GetBookingModel);
@@ -143,7 +143,7 @@ public class BookingServiceTest
     [Theory]
     [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2023-03-01", "2024-01-01")]
     [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2023-03-01", "2026-01-01")]
-    public async Task GetParticularBookings_WhenBookingDataIsCorrect_ShouldReturnListOfModels_Async(string hotelId,
+    public async Task GetParticularBookings_WhenBookingDataIsCorrect_ShouldReturnListOfModels(string hotelId,
         string bookingFrom, string bookingTo)
     {
         // Act
@@ -152,7 +152,7 @@ public class BookingServiceTest
         var correctBookingTo = DateTime.Parse(bookingTo);
 
         _bookingRepoMock
-            .Setup(r => r.GetParticularBookingsAsync(correctHotelId, correctBookingFrom, correctBookingTo))
+            .Setup(r => r.GetParticularBookings(correctHotelId, correctBookingFrom, correctBookingTo))
             .ReturnsAsync(BookingEntityData.SortedList(correctHotelId, correctBookingFrom, correctBookingTo));
         _mapperMock.Setup(m => m.Map<List<BookingEntity>>(It.IsAny<List<BookingModel>>()))
             .Returns(BookingEntityData.SortedList(correctHotelId, correctBookingFrom, correctBookingTo));
@@ -161,11 +161,11 @@ public class BookingServiceTest
 
         // Arrange
         var result =
-            await _bookingService.GetParticularBookingsAsync(correctHotelId, correctBookingFrom, correctBookingTo);
+            await _bookingService.GetParticularBookings(correctHotelId, correctBookingFrom, correctBookingTo);
 
         // Assert
         _bookingRepoMock.Verify(r =>
-            r.GetParticularBookingsAsync(correctHotelId, correctBookingFrom, correctBookingTo));
+            r.GetParticularBookings(correctHotelId, correctBookingFrom, correctBookingTo));
         result.Should().NotBeNull();
         result.Should().BeOfType<List<BookingModel>>();
         result.Should()
@@ -175,7 +175,7 @@ public class BookingServiceTest
     [Theory]
     [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2020-03-01", "2026-01-01")]
     [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2023-06-01", "2022-01-01")]
-    public async Task GetParticularBookings_WhenBookingDatesIsIncorrect_ShouldReturnException_Async(string hotelId,
+    public async Task GetParticularBookings_WhenBookingDatesIsIncorrect_ShouldReturnException(string hotelId,
         string bookingFrom, string bookingTo)
     {
         // Act
@@ -184,7 +184,7 @@ public class BookingServiceTest
         var correctBookingTo = DateTime.Parse(bookingTo);
 
         _bookingRepoMock
-            .Setup(r => r.GetParticularBookingsAsync(correctHotelId, correctBookingFrom, correctBookingTo))
+            .Setup(r => r.GetParticularBookings(correctHotelId, correctBookingFrom, correctBookingTo))
             .ReturnsAsync(BookingEntityData.SortedList(correctHotelId, correctBookingFrom, correctBookingTo));
         _mapperMock.Setup(m => m.Map<List<BookingEntity>>(It.IsAny<List<BookingModel>>()))
             .Returns(BookingEntityData.SortedList(correctHotelId, correctBookingFrom, correctBookingTo));
@@ -193,6 +193,6 @@ public class BookingServiceTest
 
         // Arrange + Assert
         await Assert.ThrowsAsync<ArgumentException>(async () =>
-            await _bookingService.GetParticularBookingsAsync(correctHotelId, correctBookingFrom, correctBookingTo));
+            await _bookingService.GetParticularBookings(correctHotelId, correctBookingFrom, correctBookingTo));
     }
 }

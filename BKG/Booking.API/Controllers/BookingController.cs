@@ -31,7 +31,7 @@ public class BookingController : ControllerBase
         await _validator.ValidateAndThrowAsync(viewModel);
 
         var bookingsModels =
-            await _bookingService.GetParticularBookingsAsync(viewModel.HotelId, viewModel.BookingFrom,
+            await _bookingService.GetParticularBookings(viewModel.HotelId, viewModel.BookingFrom,
                 viewModel.BookingTo);
         var bookingViewModels = _mapper.Map<List<BookingModel>, List<BookingViewModel>>(bookingsModels);
 
@@ -41,7 +41,7 @@ public class BookingController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var models = await _bookingService.GetAllAsync();
+        var models = await _bookingService.GetAll();
 
         return Ok(models);
     }
@@ -49,7 +49,7 @@ public class BookingController : ControllerBase
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var model = await _bookingService.GetByIdAsync(id);
+        var model = await _bookingService.GetById(id);
         var viewModel = _mapper.Map<BookingViewModel>(model);
 
         return Ok(viewModel);
@@ -61,7 +61,7 @@ public class BookingController : ControllerBase
         await _validator.ValidateAndThrowAsync(viewModel);
 
         var model = _mapper.Map<BookingModel>(viewModel);
-        await _bookingService.AddAsync(model);
+        await _bookingService.Add(model);
 
         return Ok(viewModel);
     }
@@ -73,7 +73,7 @@ public class BookingController : ControllerBase
 
         var model = _mapper.Map<BookingModel>(viewModel);
         model.Id = id;
-        await _bookingService.UpdateAsync(model);
+        await _bookingService.Update(model);
 
         return Ok(viewModel);
     }
@@ -81,7 +81,7 @@ public class BookingController : ControllerBase
     [HttpDelete("delete")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        await _bookingService.DeleteAsync(id);
+        await _bookingService.Delete(id);
 
         return Ok();
     }
