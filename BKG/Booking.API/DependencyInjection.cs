@@ -12,5 +12,12 @@ public static class DependencyInjection
         services.AddAutoMapper(typeof(BookingViewModelMapping).Assembly);
         services.AddValidatorsFromAssemblyContaining<BookingValidator>();
         services.AddBusinessAccessDependencies(configuration);
+        services.AddCors(options =>
+        {
+            options.AddPolicy("MyPolicy", builder => builder
+                .WithOrigins("https://localhost:7291")
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+        });
     }
 }
