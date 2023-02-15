@@ -4,6 +4,7 @@ using Booking.API.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiAccessDependencies(builder.Configuration);
+builder.Services.AddCustomCors();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
