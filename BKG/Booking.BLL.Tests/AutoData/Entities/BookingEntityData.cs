@@ -2,6 +2,16 @@
 
 public static class BookingEntityData
 {
+    internal static BookingEntity GetBookingEntityToUpdate = new()
+    {
+        Id = Guid.Parse("6bb0d987-4364-41c7-a873-6ffc01d7d3c1"),
+        BookingFrom = DateTime.Parse("2023-01-01"),
+        BookingTo = DateTime.Parse("2025-01-01"),
+        Price = 1,
+        HotelId = Guid.Parse("c839050c-e854-414a-93ea-f558e993e75e"),
+        Description = "Uncorrect dates where BookingFrom have past date!!!"
+    };
+
     internal static BookingEntity GetBookingEntity = new()
     {
         Id = Guid.Parse("6bb0d987-4364-41c7-a873-6ffc01d7d3c1"),

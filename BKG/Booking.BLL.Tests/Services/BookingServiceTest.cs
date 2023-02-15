@@ -1,4 +1,6 @@
-﻿namespace Booking.BLL.Tests.Services;
+﻿using FluentAssertions;
+
+namespace Booking.BLL.Tests.Services;
 
 public class BookingServiceTest
 {
@@ -26,19 +28,20 @@ public class BookingServiceTest
         var result = await _bookingService.GetAllAsync();
 
         // Assert
-        result.ShouldNotBeNull();
-        result.Count.ShouldBe(11);
+        result.Should().NotBeNull();
+        result.Should().BeEquivalentTo(BookingModelData.CreateBookingsList());
     }
 
     [Fact]
-    public async Task GetById_WhenEntityNotExist_ShouldReturnNull_Async()
+    public async Task GetById_WhenEntityNotExist_ShouldThrowException_Async()
     {
         // Act
         _bookingRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
             .ReturnsAsync(value: null);
 
         // Arrange + Assert
-        await Assert.ThrowsAsync<ArgumentNullException>(async () => await _bookingService.GetByIdAsync(It.IsAny<Guid>()));
+        await Assert.ThrowsAsync<ArgumentNullException>(
+            async () => await _bookingService.GetByIdAsync(It.IsAny<Guid>()));
     }
 
     [Fact]
@@ -54,8 +57,10 @@ public class BookingServiceTest
         var result = await _bookingService.GetByIdAsync(BookingEntityData.GetBookingEntity.Id);
 
         // Act
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<BookingModel>();
+        _bookingRepository.Verify(r => r.GetByIdAsync(BookingEntityData.GetBookingEntity.Id));
+        result.Should().NotBeNull();
+        result.Should().BeOfType<BookingModel>();
+        result.Should().BeEquivalentTo(BookingModelData.GetBookingModel);
     }
 
     [Fact]
@@ -73,8 +78,10 @@ public class BookingServiceTest
         var result = await _bookingService.AddAsync(BookingModelData.GetBookingModel);
 
         // Assert
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<BookingModel>();
+        _bookingRepository.Verify(r => r.AddAsync(BookingEntityData.GetBookingEntity));
+        result.Should().NotBeNull();
+        result.Should().BeOfType<BookingModel>();
+        result.Should().BeEquivalentTo(BookingModelData.GetBookingModel);
     }
 
 
@@ -82,23 +89,23 @@ public class BookingServiceTest
     public async Task DeleteById_WhenEntityNotExist_ShouldReturnNull_Async()
     {
         // Act
-        _bookingRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
+        _bookingRepository.Setup(r => r.DeleteAsync(It.IsAny<Guid>()))
             .ReturnsAsync(value: null);
 
         // Arrange
         var result = await _bookingService.DeleteAsync(It.IsAny<Guid>());
 
         // Assert
-        result.ShouldBeNull();
+        _bookingRepository.Verify(r => r.DeleteAsync(It.IsAny<Guid>()));
+        result.Should().BeNull();
     }
 
     [Fact]
     public async Task DeleteById_WhenEntityExist_ShouldReturnModel_Async()
     {
         // Act
-        _bookingRepository.Setup(r => r.GetByIdAsync(BookingEntityData.GetBookingEntity.Id))
+        _bookingRepository.Setup(r => r.DeleteAsync(BookingEntityData.GetBookingEntity.Id))
             .ReturnsAsync(BookingEntityData.GetBookingEntity);
-        _bookingRepository.Setup(r => r.DeleteAsync(BookingEntityData.GetBookingEntity.Id));
         _mapper.Setup(m => m.Map<BookingModel>(It.IsAny<BookingEntity>()))
             .Returns(BookingModelData.GetBookingModel);
 
@@ -106,27 +113,31 @@ public class BookingServiceTest
         var result = await _bookingService.DeleteAsync(BookingEntityData.GetBookingEntity.Id);
 
         // Assert
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<BookingModel>();
+        _bookingRepository.Verify(r => r.DeleteAsync(BookingEntityData.GetBookingEntity.Id));
+        result.Should().NotBeNull();
+        result.Should().BeOfType<BookingModel>();
+        result.Should().BeEquivalentTo(BookingModelData.GetBookingModel);
     }
 
     [Fact]
     public async Task Update_WhenBookingModelIsSet_ShouldReturnCorrectModel_Async()
     {
         // Act
-        _mapper.Setup(m => m.Map<BookingEntity>(BookingModelData.GetBookingModel))
-            .Returns(BookingEntityData.GetBookingEntity);
-        _bookingRepository.Setup(r => r.UpdateAsync(BookingEntityData.GetBookingEntity))
-            .ReturnsAsync(BookingEntityData.GetBookingEntity);
-        _mapper.Setup(m => m.Map<BookingModel>(BookingEntityData.GetBookingEntity))
-            .Returns(BookingModelData.GetBookingModel);
+        _mapper.Setup(m => m.Map<BookingEntity>(BookingModelData.GetBookingModelToUpdate))
+            .Returns(BookingEntityData.GetBookingEntityToUpdate);
+        _bookingRepository.Setup(r => r.UpdateAsync(BookingEntityData.GetBookingEntityToUpdate))
+            .ReturnsAsync(BookingEntityData.GetBookingEntityToUpdate);
+        _mapper.Setup(m => m.Map<BookingModel>(BookingEntityData.GetBookingEntityToUpdate))
+            .Returns(BookingModelData.GetBookingModelToUpdate);
 
         // Arrange
-        var result = await _bookingService.UpdateAsync(BookingModelData.GetBookingModel);
+        var result = await _bookingService.UpdateAsync(BookingModelData.GetBookingModelToUpdate);
 
         // Assert
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<BookingModel>();
+        _bookingRepository.Verify(r => r.UpdateAsync(BookingEntityData.GetBookingEntityToUpdate));
+        result.Should().NotBeNull();
+        result.Should().BeOfType<BookingModel>();
+        result.Should().NotBeEquivalentTo(BookingModelData.GetBookingModel);
     }
 
     [Theory]
@@ -153,8 +164,12 @@ public class BookingServiceTest
             await _bookingService.GetParticularBookingsAsync(correctHotelId, correctBookingFrom, correctBookingTo);
 
         // Assert
-        result.ShouldNotBeNull();
-        result.ShouldBeOfType<List<BookingModel>>();
+        _bookingRepository.Verify(r =>
+            r.GetParticularBookingsAsync(correctHotelId, correctBookingFrom, correctBookingTo));
+        result.Should().NotBeNull();
+        result.Should().BeOfType<List<BookingModel>>();
+        result.Should()
+            .BeEquivalentTo(BookingModelData.SortedList(correctHotelId, correctBookingFrom, correctBookingTo));
     }
 
     [Theory]
