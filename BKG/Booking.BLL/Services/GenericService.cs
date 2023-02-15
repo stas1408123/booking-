@@ -14,47 +14,51 @@ public class GenericService<TEntity, TModel> : BaseService<TEntity>, IGenericSer
     {
     }
 
-    public async Task<List<TModel>> GetAllAsync()
+    public async Task<List<TModel>> GetAll()
     {
-        var entities = await GenericRepository.GetAllAsync();
+        var entities = await GenericRepository.GetAll();
 
-        var models = Mapper.Map<List<TEntity>, List<TModel>>(entities);
+        var models = Mapper.Map<List<TModel>>(entities);
 
         return models;
     }
 
-    public async Task<TModel> GetByIdAsync(Guid id)
+    public async Task<TModel> GetById(Guid id)
     {
-        var entity = await GenericRepository.GetByIdAsync(id);
+        var entity = await GenericRepository.GetById(id);
 
         if (entity is null) throw new ArgumentNullException($"Cannot find {typeof(TModel).Name} by id: {id}");
 
-        var model = Mapper.Map<TEntity, TModel>(entity);
+        var model = Mapper.Map<TModel>(entity);
 
         return model;
     }
 
-    public async Task<TModel> AddAsync(TModel model)
+    public async Task<TModel> Add(TModel model)
     {
         model.Id = Guid.NewGuid();
-        var entity = Mapper.Map<TModel, TEntity>(model);
+        var entity = Mapper.Map<TEntity>(model);
 
-        var createdEntity = await GenericRepository.AddAsync(entity);
-        var createdModel = Mapper.Map<TEntity, TModel>(createdEntity);
+        var createdEntity = await GenericRepository.Add(entity);
+        var createdModel = Mapper.Map<TModel>(createdEntity);
 
         return createdModel;
     }
 
-    public async Task<TModel> UpdateAsync(TModel model)
+    public async Task<TModel> Update(TModel model)
     {
-        var entity = Mapper.Map<TModel, TEntity>(model);
-        await GenericRepository.UpdateAsync(entity);
+        var entity = Mapper.Map<TEntity>(model);
+        await GenericRepository.Update(entity);
 
         return model;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task<TModel> Delete(Guid id)
     {
-        await GenericRepository.DeleteAsync(id);
+        var entity = await GenericRepository.Delete(id);
+
+        var model = Mapper.Map<TModel>(entity);
+
+        return model;
     }
 }

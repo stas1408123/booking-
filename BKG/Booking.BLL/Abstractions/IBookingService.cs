@@ -4,5 +4,5 @@ namespace Booking.BLL.Abstractions;
 
 public interface IBookingService : IGenericService<BookingModel>
 {
-    Task<List<BookingModel>> GetParticularBookingsAsync(Guid hotelId, DateTime searchFrom, DateTime searchTo);
+    Task<List<BookingModel>> GetParticularBookings(Guid hotelId, DateTime searchFrom, DateTime searchTo);
 }

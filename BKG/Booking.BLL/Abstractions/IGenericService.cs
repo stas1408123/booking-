@@ -5,9 +5,9 @@ namespace Booking.BLL.Abstractions;
 public interface IGenericService<TModel>
     where TModel : BaseModel
 {
-    Task<List<TModel>> GetAllAsync();
-    Task<TModel> GetByIdAsync(Guid id);
-    Task<TModel> AddAsync(TModel model);
-    Task<TModel> UpdateAsync(TModel model);
-    Task DeleteAsync(Guid id);
+    Task<List<TModel>> GetAll();
+    Task<TModel> GetById(Guid id);
+    Task<TModel> Add(TModel model);
+    Task<TModel> Update(TModel model);
+    Task<TModel> Delete(Guid id);
 }
