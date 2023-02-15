@@ -40,7 +40,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          EXCLUDE_FROM_COVERAGE: " **/Controllers/**/*, **/Mapping/**/*, **/Validators/**/*, **/ViewModels/**/*, **/Extensions/**/*, **/DI/**/*, **/Models/**/*, **/Abstractions/**/*, **/Configurations/**/*, **/Entities/**/*, **/Migrations/**/*"
+          EXCLUDE_FROM_COVERAGE: " **/Controllers/**/*, **/Mapping/**/*, **/Validators/**/*, **/ViewModels/**/*, **/Extensions/**/*, **/DI/**/*, **/Models/**/*, **/Abstractions/**/*, **/Configurations/**/*, **/Entities/**/*, **/Migrations/**/*,  **/Program.cs,  **/DependencyInjection.cs,  **/CustomCors.cs"
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"stas1408123_booking-" /o:"stas1408123" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverage.exclusions="${{ env.EXCLUDE_FROM_COVERAGE }}" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml"

@@ -1,29 +1,56 @@
 using Booking.API;
 using Booking.API.Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace Booking.API;
 
-builder.Services.AddApiAccessDependencies(builder.Configuration);
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-var logger = app.Services.GetRequiredService<ILogger<Program>>();
-
-if (app.Environment.IsDevelopment())
+public class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddApiAccessDependencies(builder.Configuration);
+        builder.Services.AddCustomCors();
+
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        var app = builder.Build();
+        var logger = app.Services.GetRequiredService<ILogger<Program>>();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseCors("MyPolicy");
+
+        app.ConfigureExceptionHandler(logger);
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
+    }
 }
 
-app.ConfigureExceptionHandler(logger);
+internal static class CustomExtensionsMethods
+{
+    public static IServiceCollection AddCustomCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("MyPolicy", builder => builder
+                .WithOrigins("https://localhost:7291")
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+        });
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+        return services;
+    }
+}
