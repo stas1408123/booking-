@@ -4,7 +4,7 @@ using Booking.API.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApiAccessDependencies(builder.Configuration);
-AddCustomCors();
+builder.Services.AddCustomCors();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -31,13 +31,18 @@ app.MapControllers();
 
 app.Run();
 
-void AddCustomCors()
+public static class CustomExtensionsMethods
 {
-    builder.Services.AddCors(options =>
+    public static IServiceCollection AddCustomCors(this IServiceCollection services)
     {
-        options.AddPolicy("MyPolicy", builder => builder
-            .WithOrigins("https://localhost:7291")
-            .AllowAnyHeader()
-            .AllowAnyMethod());
-    });
+        services.AddCors(options =>
+        {
+            options.AddPolicy("MyPolicy", builder => builder
+                .WithOrigins("https://localhost:7291")
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+        });
+
+        return services;
+    }
 }
