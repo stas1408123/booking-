@@ -1,160 +1,158 @@
 ﻿using Booking.API.Tests.AutoData.ViewModels;
 using Booking.API.Validators;
-using Booking.API.ViewModels;
 using FluentValidation.TestHelper;
 
-namespace Booking.API.Tests.Validators
+namespace Booking.API.Tests.Validators;
+
+public class BookingValidatorTest
 {
-    public class BookingValidatorTest
+    private readonly BookingValidator _validator;
+
+    public BookingValidatorTest()
     {
-        private readonly BookingValidator _validator;
+        _validator = new BookingValidator();
+    }
 
-        public BookingValidatorTest()
-        {
-            _validator = new BookingValidator();
-        }
+    [Fact]
+    public void BookingValidator_BookingFromHaveThePastDate_ShouldHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetInCorrectBookingFrom;
 
-        [Fact]
-        public void Should_HaveErrorWhen_BookingFromHaveThePastDate()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetInCorrectBookingFrom;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldHaveValidationErrorFor(booking => booking.BookingFrom);
+    }
 
-            // Assert
-            result.ShouldHaveValidationErrorFor(booking => booking.BookingFrom);
-        }
+    [Fact]
+    public void BookingValidator_BookingFromHaveCorrectDate_ShouldNotHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetCorrectBookingFrom;
 
-        [Fact]
-        public void Should_NotHaveErrorWhen_BookingFromHaveCorrectDate()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetCorrectBookingFrom;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(booking => booking.BookingFrom);
+    }
 
-            // Assert
-            result.ShouldNotHaveValidationErrorFor(booking => booking.BookingFrom);
-        }
+    [Fact]
+    public void BookingValidator_BookingToHaveThePastDate_ShouldHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetInCorrectBookingTo;
 
-        [Fact]
-        public void Should_HaveErrorWhen_BookingToHaveThePastDate()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetInCorrectBookingTo;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldHaveValidationErrorFor(booking => booking.BookingTo);
+    }
 
-            // Assert
-            result.ShouldHaveValidationErrorFor(booking => booking.BookingTo);
-        }
+    [Fact]
+    public void BookingValidator_BookingToHaveCorrectDate_ShouldNotHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetCorrectBookingTo;
 
-        [Fact]
-        public void Should_NotHaveErrorWhen_BookingToHaveCorrectDate()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetCorrectBookingTo;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(booking => booking.BookingTo);
+    }
 
-            // Assert
-            result.ShouldNotHaveValidationErrorFor(booking => booking.BookingTo);
-        }
+    [Fact]
+    public void BookingValidator_DescriptionIsNull_ShouldHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetNullDescription;
 
-        [Fact]
-        public void Should_HaveErrorWhen_DescriptionIsNull()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetNullDescription;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldHaveValidationErrorFor(booking => booking.Description);
+    }
 
-            // Assert
-            result.ShouldHaveValidationErrorFor(booking => booking.Description);
-        }
+    [Fact]
+    public void BookingValidator_DescriptionIsEmpty_ShouldHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetEmptyDescription;
 
-        [Fact]
-        public void Should_HaveErrorWhen_DescriptionIsEmpty()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetEmptyDescription;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldHaveValidationErrorFor(booking => booking.Description);
+    }
 
-            // Assert
-            result.ShouldHaveValidationErrorFor(booking => booking.Description);
-        }
+    [Fact]
+    public void BookingValidator_DescriptionIsCorrect_ShouldNotHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetCorrectDescription;
 
-        [Fact]
-        public void Should_NotHaveErrorWhen_DescriptionIsCorrect()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetCorrectDescription;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(booking => booking.Description);
+    }
 
-            // Assert
-            result.ShouldNotHaveValidationErrorFor(booking => booking.Description);
-        }
+    [Fact]
+    public void BookingValidator_PriceIsInCorrect_ShouldHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetInCorrectPrice;
 
-        [Fact]
-        public void Should_HaveErrorWhen_PriceIsInCorrect()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetInCorrectPrice;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldHaveValidationErrorFor(booking => booking.Price);
+    }
 
-            // Assert
-            result.ShouldHaveValidationErrorFor(booking => booking.Price);
-        }
+    [Fact]
+    public void BookingValidator_PriceIsCorrect_ShouldNotHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetCorrectPrice;
 
-        [Fact]
-        public void Should_NotHaveErrorWhen_PriceIsCorrect()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetCorrectPrice;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(booking => booking.Price);
+    }
 
-            // Assert
-            result.ShouldNotHaveValidationErrorFor(booking => booking.Price);
-        }
+    [Fact]
+    public void BookingValidator_HotelIdIsEmpty_ShouldHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetEmptyHotelId;
 
-        [Fact]
-        public void Should_HaveErrorWhen_HotelIdIsEmpty()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetEmptyHotelId;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
+        // Assert
+        result.ShouldHaveValidationErrorFor(booking => booking.HotelId);
+    }
 
-            // Assert
-            result.ShouldHaveValidationErrorFor(booking => booking.HotelId);
-        }
+    [Fact]
+    public void BookingValidator_HotelIdIsCorrect_ShouldNotHaveError()
+    {
+        // Act
+        var viewModel = BookingViewModelData.GetCorrectHotelId;
 
-        [Fact]
-        public void Should_NotHaveErrorWhen_HotelIdIsCorrect()
-        {
-            // Act
-            var viewModel = BookingViewModelData.GetCorrectHotelId;
+        // Arrange
+        var result = _validator.TestValidate(viewModel);
 
-            // Arrange
-            var result = _validator.TestValidate(viewModel);
-
-            // Assert
-            result.ShouldNotHaveValidationErrorFor(booking => booking.HotelId);
-        }
+        // Assert
+        result.ShouldNotHaveValidationErrorFor(booking => booking.HotelId);
     }
 }
