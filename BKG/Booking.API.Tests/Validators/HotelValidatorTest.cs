@@ -14,7 +14,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_TitleIsNull_ShouldHaveError()
+    public void HotelValidator_TitleIsNull_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetNullTitle;
@@ -27,7 +27,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_TitleIsEmpty_ShouldHaveError()
+    public void HotelValidator_TitleIsEmpty_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetEmptyTitle;
@@ -40,7 +40,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_TitleLengthIsInvalid_ShouldHaveError()
+    public void HotelValidator_TitleLengthIsInvalid_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetInvalidLengthTitle;
@@ -53,7 +53,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_TitleIsValid_ShouldNotHaveError()
+    public void HotelValidator_TitleIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = HotelViewModelData.GetValidTitle;
@@ -66,7 +66,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_AddressIsNull_ShouldHaveError()
+    public void HotelValidator_AddressIsNull_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetNullAddress;
@@ -79,7 +79,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_AddressIsEmpty_ShouldHaveError()
+    public void HotelValidator_AddressIsEmpty_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetEmptyAddress;
@@ -92,7 +92,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_AddressIsValid_NotHaveError()
+    public void HotelValidator_AddressIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = HotelViewModelData.GetValidAddress;
@@ -105,7 +105,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_CountRoomsIsTooFew_ShouldHaveError()
+    public void HotelValidator_CountRoomsIsTooFew_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetTooFewCountRooms;
@@ -118,7 +118,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_CountRoomsIsTooMuch_ShouldHaveError()
+    public void HotelValidator_CountRoomsIsTooMuch_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetTooMuchCountRooms;
@@ -131,7 +131,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_CountRoomsIsValid_ShouldNotHaveError()
+    public void HotelValidator_CountRoomsIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = HotelViewModelData.GetValidCountRooms;
@@ -144,7 +144,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_DescriptionIsNull_ShouldHaveError()
+    public void HotelValidator_DescriptionIsNull_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetNullDescription;
@@ -157,7 +157,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_DescriptionIsEmpty_ShouldHaveError()
+    public void HotelValidator_DescriptionIsEmpty_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetEmptyDescription;
@@ -170,7 +170,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_DescriptionIsValid_ShouldNotHaveError()
+    public void HotelValidator_DescriptionIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = HotelViewModelData.GetValidDescription;
@@ -183,7 +183,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_StarsIsTooSmall_ShouldHaveError()
+    public void HotelValidator_StarsIsTooSmall_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetTooSmallStars;
@@ -196,7 +196,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_StarsIsTooBig_ShouldHaveError()
+    public void HotelValidator_StarsIsTooBig_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetTooBigStars;
@@ -209,7 +209,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_StarsIsValid_ShouldNotHaveError()
+    public void HotelValidator_StarsIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = HotelViewModelData.GetValidStars;
@@ -222,7 +222,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_PhoneNumberIsNull_ShouldHaveError()
+    public void HotelValidator_PhoneNumberIsNull_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetNullPhoneNumber;
@@ -235,7 +235,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_PhoneNumberIsEmpty_ShouldHaveError()
+    public void HotelValidator_PhoneNumberIsEmpty_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetEmptyPhoneNumber;
@@ -248,7 +248,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_PhoneNumberLengthIsTooShort_ShouldHaveError()
+    public void HotelValidator_PhoneNumberLengthIsTooShort_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetTooShortLengthPhoneNumber;
@@ -261,7 +261,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_PhoneNumberLengthIsTooBig_ShouldHaveError()
+    public void HotelValidator_PhoneNumberLengthIsTooBig_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetTooBigLengthPhoneNumber;
@@ -274,7 +274,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_PhoneNumberIsInvalid_ShouldHaveError()
+    public void HotelValidator_PhoneNumberIsInvalid_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetInvalidPhoneNumber;
@@ -287,7 +287,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_PhoneNumberIsValid_ShouldNotHaveError()
+    public void HotelValidator_PhoneNumberIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = HotelViewModelData.GetValidPhoneNumber;
@@ -300,7 +300,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_OwnerIsNull_ShouldHaveError()
+    public void HotelValidator_OwnerIsNull_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetNullOwner;
@@ -313,7 +313,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_OwnerIsEmpty_ShouldHaveError()
+    public void HotelValidator_OwnerIsEmpty_ReturnsError()
     {
         // Act
         var viewModel = HotelViewModelData.GetValidPhoneNumber;
@@ -326,7 +326,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_OwnerIsValid_ShouldNotHaveError()
+    public void HotelValidator_OwnerIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = HotelViewModelData.GetCorrectOwner;

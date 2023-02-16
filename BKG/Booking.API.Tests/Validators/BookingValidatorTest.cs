@@ -14,7 +14,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_BookingFromHaveThePastDate_ShouldHaveError()
+    public void BookingValidator_BookingFromHaveThePastDate_ReturnsError()
     {
         // Act
         var viewModel = BookingViewModelData.GetInvalidBookingFrom;
@@ -27,7 +27,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_BookingFromHaveValidDate_ShouldNotHaveError()
+    public void BookingValidator_BookingFromHaveValidDate_ReturnsNotError()
     {
         // Act
         var viewModel = BookingViewModelData.GetValidBookingFrom;
@@ -40,7 +40,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_BookingToHaveThePastDate_ShouldHaveError()
+    public void BookingValidator_BookingToHaveThePastDate_ReturnsError()
     {
         // Act
         var viewModel = BookingViewModelData.GetInvalidBookingTo;
@@ -53,7 +53,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_BookingToHaveValidDate_ShouldNotHaveError()
+    public void BookingValidator_BookingToHaveValidDate_ReturnsNotError()
     {
         // Act
         var viewModel = BookingViewModelData.GetValidBookingTo;
@@ -66,7 +66,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_DescriptionIsNull_ShouldHaveError()
+    public void BookingValidator_DescriptionIsNull_ReturnsError()
     {
         // Act
         var viewModel = BookingViewModelData.GetNullDescription;
@@ -79,7 +79,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_DescriptionIsEmpty_ShouldHaveError()
+    public void BookingValidator_DescriptionIsEmpty_ReturnsError()
     {
         // Act
         var viewModel = BookingViewModelData.GetEmptyDescription;
@@ -92,7 +92,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_DescriptionIsValid_ShouldNotHaveError()
+    public void BookingValidator_DescriptionIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = BookingViewModelData.GetValidDescription;
@@ -105,7 +105,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_PriceIsInvalid_ShouldHaveError()
+    public void BookingValidator_PriceIsInvalid_ReturnsError()
     {
         // Act
         var viewModel = BookingViewModelData.GetInvalidPrice;
@@ -118,7 +118,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_PriceIsValid_ShouldNotHaveError()
+    public void BookingValidator_PriceIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = BookingViewModelData.GetValidPrice;
@@ -131,7 +131,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_HotelIdIsEmpty_ShouldHaveError()
+    public void BookingValidator_HotelIdIsEmpty_ReturnsError()
     {
         // Act
         var viewModel = BookingViewModelData.GetEmptyHotelId;
@@ -144,7 +144,7 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_HotelIdIsValid_ShouldNotHaveError()
+    public void BookingValidator_HotelIdIsValid_ReturnsNotError()
     {
         // Act
         var viewModel = BookingViewModelData.GetValidHotelId;
