@@ -113,5 +113,20 @@ namespace Booking.API.Tests.AutoData.ViewModels
         {
             PhoneNumber = "+375336869225"
         };
+
+        internal static HotelViewModel GetNullOwner = new()
+        {
+            Owner = null
+        };
+
+        internal static HotelViewModel GetEmptyOwner = new()
+        {
+            Owner = ""
+        };
+
+        internal static HotelViewModel GetCorrectOwner = new()
+        {
+            Owner = "Stasyambich"
+        };
     }
 }

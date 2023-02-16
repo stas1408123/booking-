@@ -298,5 +298,44 @@ namespace Booking.API.Tests.Validators
             // Assert
             result.ShouldNotHaveValidationErrorFor(hotel => hotel.PhoneNumber);
         }
+
+        [Fact]
+        public void Should_HaveErrorWhen_OwnerIsNull()
+        {
+            // Act
+            var viewModel = HotelViewModelData.GetNullOwner;
+
+            // Arrange
+            var result = _validator.TestValidate(viewModel);
+
+            // Assert
+            result.ShouldHaveValidationErrorFor(hotel => hotel.Owner);
+        }
+
+        [Fact]
+        public void Should_HaveErrorWhen_OwnerIsEmpty()
+        {
+            // Act
+            var viewModel = HotelViewModelData.GetCorrectPhoneNumber;
+
+            // Arrange
+            var result = _validator.TestValidate(viewModel);
+
+            // Assert
+            result.ShouldHaveValidationErrorFor(hotel => hotel.Owner);
+        }
+
+        [Fact]
+        public void Should_NotHaveErrorWhen_OwnerIsCorrect()
+        {
+            // Act
+            var viewModel = HotelViewModelData.GetCorrectOwner;
+
+            // Arrange
+            var result = _validator.TestValidate(viewModel);
+
+            // Assert
+            result.ShouldNotHaveValidationErrorFor(hotel => hotel.Owner);
+        }
     }
 }
