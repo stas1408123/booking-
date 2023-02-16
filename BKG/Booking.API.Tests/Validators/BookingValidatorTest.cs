@@ -17,7 +17,7 @@ public class BookingValidatorTest
     public void BookingValidator_BookingFromHaveThePastDate_ShouldHaveError()
     {
         // Act
-        var viewModel = BookingViewModelData.GetInCorrectBookingFrom;
+        var viewModel = BookingViewModelData.GetInvalidBookingFrom;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -27,10 +27,10 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_BookingFromHaveCorrectDate_ShouldNotHaveError()
+    public void BookingValidator_BookingFromHaveValidDate_ShouldNotHaveError()
     {
         // Act
-        var viewModel = BookingViewModelData.GetCorrectBookingFrom;
+        var viewModel = BookingViewModelData.GetValidBookingFrom;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -43,7 +43,7 @@ public class BookingValidatorTest
     public void BookingValidator_BookingToHaveThePastDate_ShouldHaveError()
     {
         // Act
-        var viewModel = BookingViewModelData.GetInCorrectBookingTo;
+        var viewModel = BookingViewModelData.GetInvalidBookingTo;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -53,10 +53,10 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_BookingToHaveCorrectDate_ShouldNotHaveError()
+    public void BookingValidator_BookingToHaveValidDate_ShouldNotHaveError()
     {
         // Act
-        var viewModel = BookingViewModelData.GetCorrectBookingTo;
+        var viewModel = BookingViewModelData.GetValidBookingTo;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -92,10 +92,10 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_DescriptionIsCorrect_ShouldNotHaveError()
+    public void BookingValidator_DescriptionIsValid_ShouldNotHaveError()
     {
         // Act
-        var viewModel = BookingViewModelData.GetCorrectDescription;
+        var viewModel = BookingViewModelData.GetValidDescription;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -105,10 +105,10 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_PriceIsInCorrect_ShouldHaveError()
+    public void BookingValidator_PriceIsInvalid_ShouldHaveError()
     {
         // Act
-        var viewModel = BookingViewModelData.GetInCorrectPrice;
+        var viewModel = BookingViewModelData.GetInvalidPrice;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -118,10 +118,10 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_PriceIsCorrect_ShouldNotHaveError()
+    public void BookingValidator_PriceIsValid_ShouldNotHaveError()
     {
         // Act
-        var viewModel = BookingViewModelData.GetCorrectPrice;
+        var viewModel = BookingViewModelData.GetValidPrice;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -144,10 +144,10 @@ public class BookingValidatorTest
     }
 
     [Fact]
-    public void BookingValidator_HotelIdIsCorrect_ShouldNotHaveError()
+    public void BookingValidator_HotelIdIsValid_ShouldNotHaveError()
     {
         // Act
-        var viewModel = BookingViewModelData.GetCorrectHotelId;
+        var viewModel = BookingViewModelData.GetValidHotelId;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);

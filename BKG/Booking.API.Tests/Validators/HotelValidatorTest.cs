@@ -40,10 +40,10 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_TitleLengthIsInCorrect_ShouldHaveError()
+    public void HotelValidator_TitleLengthIsInvalid_ShouldHaveError()
     {
         // Act
-        var viewModel = HotelViewModelData.GetInCorrectLengthTitle;
+        var viewModel = HotelViewModelData.GetInvalidLengthTitle;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -53,10 +53,10 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_TitleIsCorrect_ShouldNotHaveError()
+    public void HotelValidator_TitleIsValid_ShouldNotHaveError()
     {
         // Act
-        var viewModel = HotelViewModelData.GetCorrectTitle;
+        var viewModel = HotelViewModelData.GetValidTitle;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -92,10 +92,10 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_AddressIsCorrect_NotHaveError()
+    public void HotelValidator_AddressIsValid_NotHaveError()
     {
         // Act
-        var viewModel = HotelViewModelData.GetCorrectAddress;
+        var viewModel = HotelViewModelData.GetValidAddress;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -131,10 +131,10 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_CountRoomsIsCorrect_ShouldNotHaveError()
+    public void HotelValidator_CountRoomsIsValid_ShouldNotHaveError()
     {
         // Act
-        var viewModel = HotelViewModelData.GetCorrectCountRooms;
+        var viewModel = HotelViewModelData.GetValidCountRooms;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -170,10 +170,10 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_DescriptionIsCorrect_ShouldNotHaveError()
+    public void HotelValidator_DescriptionIsValid_ShouldNotHaveError()
     {
         // Act
-        var viewModel = HotelViewModelData.GetCorrectDescription;
+        var viewModel = HotelViewModelData.GetValidDescription;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -209,10 +209,10 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_StarsIsCorrect_ShouldNotHaveError()
+    public void HotelValidator_StarsIsValid_ShouldNotHaveError()
     {
         // Act
-        var viewModel = HotelViewModelData.GetCorrectStars;
+        var viewModel = HotelViewModelData.GetValidStars;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -274,10 +274,10 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_PhoneNumberIsNotValid_ShouldHaveError()
+    public void HotelValidator_PhoneNumberIsInvalid_ShouldHaveError()
     {
         // Act
-        var viewModel = HotelViewModelData.GetNotValidPhoneNumber;
+        var viewModel = HotelViewModelData.GetInvalidPhoneNumber;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -287,10 +287,10 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_PhoneNumberIsCorrect_ShouldNotHaveError()
+    public void HotelValidator_PhoneNumberIsValid_ShouldNotHaveError()
     {
         // Act
-        var viewModel = HotelViewModelData.GetCorrectPhoneNumber;
+        var viewModel = HotelViewModelData.GetValidPhoneNumber;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -316,7 +316,7 @@ public class HotelValidatorTest
     public void HotelValidator_OwnerIsEmpty_ShouldHaveError()
     {
         // Act
-        var viewModel = HotelViewModelData.GetCorrectPhoneNumber;
+        var viewModel = HotelViewModelData.GetValidPhoneNumber;
 
         // Arrange
         var result = _validator.TestValidate(viewModel);
@@ -326,7 +326,7 @@ public class HotelValidatorTest
     }
 
     [Fact]
-    public void HotelValidator_OwnerIsCorrect_ShouldNotHaveError()
+    public void HotelValidator_OwnerIsValid_ShouldNotHaveError()
     {
         // Act
         var viewModel = HotelViewModelData.GetCorrectOwner;

@@ -4,22 +4,22 @@ namespace Booking.API.Tests.AutoData.ViewModels;
 
 public static class BookingViewModelData
 {
-    internal static BookingViewModel GetInCorrectBookingFrom = new()
+    internal static BookingViewModel GetInvalidBookingFrom = new()
     {
         BookingFrom = DateTime.Parse("2020-01-01")
     };
 
-    internal static BookingViewModel GetCorrectBookingFrom = new()
+    internal static BookingViewModel GetValidBookingFrom = new()
     {
         BookingFrom = DateTime.Parse("2023-03-01")
     };
 
-    internal static BookingViewModel GetInCorrectBookingTo = new()
+    internal static BookingViewModel GetInvalidBookingTo = new()
     {
         BookingTo = DateTime.Parse("2020-01-01")
     };
 
-    internal static BookingViewModel GetCorrectBookingTo = new()
+    internal static BookingViewModel GetValidBookingTo = new()
     {
         BookingTo = DateTime.Parse("2024-01-01")
     };
@@ -34,17 +34,17 @@ public static class BookingViewModelData
         Description = ""
     };
 
-    internal static BookingViewModel GetCorrectDescription = new()
+    internal static BookingViewModel GetValidDescription = new()
     {
         Description = "Correct"
     };
 
-    internal static BookingViewModel GetInCorrectPrice = new()
+    internal static BookingViewModel GetInvalidPrice = new()
     {
         Price = -1
     };
 
-    internal static BookingViewModel GetCorrectPrice = new()
+    internal static BookingViewModel GetValidPrice = new()
     {
         Price = 1
     };
@@ -54,7 +54,7 @@ public static class BookingViewModelData
         HotelId = Guid.Empty
     };
 
-    internal static BookingViewModel GetCorrectHotelId = new()
+    internal static BookingViewModel GetValidHotelId = new()
     {
         HotelId = Guid.NewGuid()
     };

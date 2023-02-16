@@ -14,12 +14,12 @@ public class HotelViewModelData
         Title = ""
     };
 
-    internal static HotelViewModel GetInCorrectLengthTitle = new()
+    internal static HotelViewModel GetInvalidLengthTitle = new()
     {
         Title = "Maximum length is 20, but this title have more than 20"
     };
 
-    internal static HotelViewModel GetCorrectTitle = new()
+    internal static HotelViewModel GetValidTitle = new()
     {
         Title = "Correct"
     };
@@ -34,7 +34,7 @@ public class HotelViewModelData
         Address = ""
     };
 
-    internal static HotelViewModel GetCorrectAddress = new()
+    internal static HotelViewModel GetValidAddress = new()
     {
         Address = "Belarus, Mogilev, Pervomayskaya, 41"
     };
@@ -49,7 +49,7 @@ public class HotelViewModelData
         CountRooms = 2134
     };
 
-    internal static HotelViewModel GetCorrectCountRooms = new()
+    internal static HotelViewModel GetValidCountRooms = new()
     {
         CountRooms = 666
     };
@@ -64,7 +64,7 @@ public class HotelViewModelData
         Description = ""
     };
 
-    internal static HotelViewModel GetCorrectDescription = new()
+    internal static HotelViewModel GetValidDescription = new()
     {
         Description = "Correct"
     };
@@ -79,7 +79,7 @@ public class HotelViewModelData
         Stars = 7
     };
 
-    internal static HotelViewModel GetCorrectStars = new()
+    internal static HotelViewModel GetValidStars = new()
     {
         Stars = 5
     };
@@ -104,12 +104,12 @@ public class HotelViewModelData
         PhoneNumber = "+3757243821741287471274127471247"
     };
 
-    internal static HotelViewModel GetNotValidPhoneNumber = new()
+    internal static HotelViewModel GetInvalidPhoneNumber = new()
     {
         PhoneNumber = "375336869225"
     };
 
-    internal static HotelViewModel GetCorrectPhoneNumber = new()
+    internal static HotelViewModel GetValidPhoneNumber = new()
     {
         PhoneNumber = "+375336869225"
     };
