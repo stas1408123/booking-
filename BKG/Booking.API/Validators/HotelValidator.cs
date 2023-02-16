@@ -14,6 +14,7 @@ public class HotelValidator : AbstractValidator<HotelViewModel>
             .NotNull().NotEmpty().WithMessage("Address is required");
         RuleFor(h => h.CountRooms)
             .NotNull().NotEmpty().WithMessage("Count rooms is required")
+            .Must(r => r >= 1).WithMessage("Count rooms cannot be less than 1")
             .Must(r => r <= 1000).WithMessage("Count rooms cannot be more than 1000");
         RuleFor(h => h.Description)
             .NotNull().NotEmpty().WithMessage("Description is required");
@@ -21,7 +22,8 @@ public class HotelValidator : AbstractValidator<HotelViewModel>
             .NotNull().NotEmpty().WithMessage("Owner is required");
         RuleFor(h => h.Stars)
             .NotNull().NotEmpty().WithMessage("Stars is required")
-            .Must(s => s is >= 1 and <= 5).WithMessage("Stars cannot be less than 1 and more than 5");
+            .Must(s => s >= 1).WithMessage("Stars cannot be less than 1")
+            .Must(s => s <= 5).WithMessage("Stars cannot be more than 5");
         RuleFor(h => h.PhoneNumber)
             .NotNull().NotEmpty().WithMessage("Phone number is required")
             .MinimumLength(10).WithMessage("Phone number length cannot be less than 10 numbers")
