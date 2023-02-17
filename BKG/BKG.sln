@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4453A6F6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.BLL.Tests", "Booking.BLL.Tests\Booking.BLL.Tests.csproj", "{2F3A4AAA-ABBE-4111-BEAF-09C58D86BD2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.API.Tests", "Booking.API.Tests\Booking.API.Tests.csproj", "{0D0967F7-0869-4B28-A931-7422A402483C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Booking.API.Tests", "Booking.API.Tests\Booking.API.Tests.csproj", "{0D0967F7-0869-4B28-A931-7422A402483C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Booking.IntegrationTests", "Booking.IntegrationTests\Booking.IntegrationTests.csproj", "{2167E98A-02F3-4062-B531-D1C5C613B4FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{0D0967F7-0869-4B28-A931-7422A402483C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D0967F7-0869-4B28-A931-7422A402483C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D0967F7-0869-4B28-A931-7422A402483C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2167E98A-02F3-4062-B531-D1C5C613B4FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2167E98A-02F3-4062-B531-D1C5C613B4FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2167E98A-02F3-4062-B531-D1C5C613B4FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2167E98A-02F3-4062-B531-D1C5C613B4FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2F3A4AAA-ABBE-4111-BEAF-09C58D86BD2F} = {4453A6F6-7482-4E3E-8CED-076718382E58}
 		{0D0967F7-0869-4B28-A931-7422A402483C} = {4453A6F6-7482-4E3E-8CED-076718382E58}
+		{2167E98A-02F3-4062-B531-D1C5C613B4FB} = {4453A6F6-7482-4E3E-8CED-076718382E58}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {703D4D2E-A145-4D4D-A1EE-2C806CC5EC2D}
