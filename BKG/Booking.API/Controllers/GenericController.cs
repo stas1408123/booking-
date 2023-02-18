@@ -65,7 +65,7 @@ public class GenericController<TModel, TViewModel> : ControllerBase
         return Ok(viewModel);
     }
 
-    [HttpDelete("delete")]
+    [HttpDelete("delete/{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         await GenericService.Delete(id);
