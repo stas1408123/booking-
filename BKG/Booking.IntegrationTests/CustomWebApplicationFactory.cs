@@ -1,5 +1,4 @@
 ﻿using Booking.DAL;
-using Booking.IntegrationTests.AutoData;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;

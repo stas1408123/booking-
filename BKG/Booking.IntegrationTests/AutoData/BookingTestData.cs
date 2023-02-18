@@ -4,6 +4,34 @@ namespace Booking.IntegrationTests.AutoData;
 
 public static class BookingTestData
 {
+    internal static BookingEntity ExpectedBooking => new()
+    {
+        BookingFrom = DateTime.Parse("2023-05-01"),
+        BookingTo = DateTime.Parse("2025-01-01"),
+        Price = 1,
+        Description = "Nvm",
+        HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
+    };
+
+    internal static BookingEntity ValidBookingToAdd => new()
+    {
+        BookingFrom = DateTime.Parse("2023-12-12"),
+        BookingTo = DateTime.Parse("2024-03-01"),
+        Price = 2,
+        Description = "Valid booking",
+        HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
+    };
+
+    internal static BookingEntity ValidBookingToUpdate => new()
+    {
+        Id = Guid.Parse("0c3db3ee-6f77-4b64-a5ec-27298749f421"),
+        BookingFrom = DateTime.Parse("2023-12-12"),
+        BookingTo = DateTime.Parse("2024-03-01"),
+        Price = 2,
+        Description = "Valid booking",
+        HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
+    };
+
     internal static List<BookingEntity> CreateExpectedBookingList()
     {
         var bookingList = new List<BookingEntity>
@@ -40,38 +68,10 @@ public static class BookingTestData
         return bookingList;
     }
 
-    internal static BookingEntity ExpectedBooking => new()
-    {
-        BookingFrom = DateTime.Parse("2023-05-01"),
-        BookingTo = DateTime.Parse("2025-01-01"),
-        Price = 1,
-        Description = "Nvm",
-        HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
-    };
-
-    internal static BookingEntity ValidBookingToAdd => new()
-    {
-        BookingFrom = DateTime.Parse("2023-12-12"),
-        BookingTo = DateTime.Parse("2024-03-01"),
-        Price = 2,
-        Description = "Valid booking",
-        HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
-    };
-
-    internal static BookingEntity ValidBookingToUpdate => new()
-    {
-        Id = Guid.Parse("0c3db3ee-6f77-4b64-a5ec-27298749f421"),
-        BookingFrom = DateTime.Parse("2023-12-12"),
-        BookingTo = DateTime.Parse("2024-03-01"),
-        Price = 2,
-        Description = "Valid booking",
-        HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
-    };
-
     internal static BookingEntity InvalidBookingToUpdate(string id, string bookingFrom, string bookingTo,
         string description, decimal price, string hotelId)
     {
-        return new BookingEntity()
+        return new BookingEntity
         {
             Id = Guid.Parse(id),
             BookingFrom = DateTime.Parse(bookingFrom),
