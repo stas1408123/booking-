@@ -18,13 +18,13 @@ public class BookingServiceTest
     [Fact]
     public async Task GetAll_WhenEntitiesExist_ShouldReturnListOfModels()
     {
-        // Act
+        // Arrange
         _bookingRepoMock.Setup(r => r.GetAll())
             .ReturnsAsync(BookingEntityData.CreateBookingsList());
         _mapperMock.Setup(m => m.Map<List<BookingModel>>(It.IsAny<List<BookingEntity>>()))
             .Returns(BookingModelData.CreateBookingsList());
 
-        // Arrange
+        // Act
         var result = await _bookingService.GetAll();
 
         // Assert
@@ -35,11 +35,11 @@ public class BookingServiceTest
     [Fact]
     public async Task GetById_WhenEntityNotExist_ShouldThrowException()
     {
-        // Act
+        // Arrange
         _bookingRepoMock.Setup(r => r.GetById(It.IsAny<Guid>()))
             .ReturnsAsync(value: null);
 
-        // Arrange + Assert
+        // Act + Assert
         await Assert.ThrowsAsync<ArgumentNullException>(
             async () => await _bookingService.GetById(It.IsAny<Guid>()));
     }
@@ -47,16 +47,16 @@ public class BookingServiceTest
     [Fact]
     public async Task GetById_WhenEntityExist_ShouldReturnModel()
     {
-        // Act
+        // Arrange
         _bookingRepoMock.Setup(r => r.GetById(BookingEntityData.GetBookingEntity.Id))
             .ReturnsAsync(BookingEntityData.GetBookingEntity);
         _mapperMock.Setup(m => m.Map<BookingModel>(It.IsAny<BookingEntity>()))
             .Returns(BookingModelData.GetBookingModel);
 
-        // Arrange
+        // Act
         var result = await _bookingService.GetById(BookingEntityData.GetBookingEntity.Id);
 
-        // Act
+        // Assert
         _bookingRepoMock.Verify(r => r.GetById(BookingEntityData.GetBookingEntity.Id));
         result.Should().NotBeNull();
         result.Should().BeOfType<BookingModel>();
@@ -66,7 +66,7 @@ public class BookingServiceTest
     [Fact]
     public async Task Create_WhenBookingModelIsSet_ShouldReturnCorrectModel()
     {
-        // Act
+        // Arrange
         _mapperMock.Setup(m => m.Map<BookingEntity>(It.IsAny<BookingModel>()))
             .Returns(BookingEntityData.GetBookingEntity);
         _bookingRepoMock.Setup(r => r.Add(BookingEntityData.GetBookingEntity))
@@ -74,7 +74,7 @@ public class BookingServiceTest
         _mapperMock.Setup(m => m.Map<BookingModel>(It.IsAny<BookingEntity>()))
             .Returns(BookingModelData.GetBookingModel);
 
-        // Arrange
+        // Act
         var result = await _bookingService.Add(BookingModelData.GetBookingModel);
 
         // Assert
@@ -88,11 +88,11 @@ public class BookingServiceTest
     [Fact]
     public async Task DeleteById_WhenEntityNotExist_ShouldReturnNull()
     {
-        // Act
+        // Arrange
         _bookingRepoMock.Setup(r => r.Delete(It.IsAny<Guid>()))
             .ReturnsAsync(value: null);
 
-        // Arrange
+        // Act
         var result = await _bookingService.Delete(It.IsAny<Guid>());
 
         // Assert
@@ -103,13 +103,13 @@ public class BookingServiceTest
     [Fact]
     public async Task DeleteById_WhenEntityExist_ShouldReturnModel()
     {
-        // Act
+        // Arrange
         _bookingRepoMock.Setup(r => r.Delete(BookingEntityData.GetBookingEntity.Id))
             .ReturnsAsync(BookingEntityData.GetBookingEntity);
         _mapperMock.Setup(m => m.Map<BookingModel>(It.IsAny<BookingEntity>()))
             .Returns(BookingModelData.GetBookingModel);
 
-        // Arrange
+        // Act
         var result = await _bookingService.Delete(BookingEntityData.GetBookingEntity.Id);
 
         // Assert
@@ -122,7 +122,7 @@ public class BookingServiceTest
     [Fact]
     public async Task Update_WhenBookingModelIsSet_ShouldReturnCorrectModel()
     {
-        // Act
+        // Arrange
         _mapperMock.Setup(m => m.Map<BookingEntity>(BookingModelData.GetBookingModelToUpdate))
             .Returns(BookingEntityData.GetBookingEntityToUpdate);
         _bookingRepoMock.Setup(r => r.Update(BookingEntityData.GetBookingEntityToUpdate))
@@ -130,7 +130,7 @@ public class BookingServiceTest
         _mapperMock.Setup(m => m.Map<BookingModel>(BookingEntityData.GetBookingEntityToUpdate))
             .Returns(BookingModelData.GetBookingModelToUpdate);
 
-        // Arrange
+        // Act
         var result = await _bookingService.Update(BookingModelData.GetBookingModelToUpdate);
 
         // Assert
@@ -146,7 +146,7 @@ public class BookingServiceTest
     public async Task GetParticularBookings_WhenBookingDataIsCorrect_ShouldReturnListOfModels(string hotelId,
         string bookingFrom, string bookingTo)
     {
-        // Act
+        // Arrange
         var correctHotelId = Guid.Parse(hotelId);
         var correctBookingFrom = DateTime.Parse(bookingFrom);
         var correctBookingTo = DateTime.Parse(bookingTo);
@@ -159,7 +159,7 @@ public class BookingServiceTest
         _mapperMock.Setup(m => m.Map<List<BookingModel>>(It.IsAny<List<BookingEntity>>()))
             .Returns(BookingModelData.SortedList(correctHotelId, correctBookingFrom, correctBookingTo));
 
-        // Arrange
+        // Act
         var result =
             await _bookingService.GetParticularBookings(correctHotelId, correctBookingFrom, correctBookingTo);
 
@@ -178,7 +178,7 @@ public class BookingServiceTest
     public async Task GetParticularBookings_WhenBookingDatesIsIncorrect_ShouldReturnException(string hotelId,
         string bookingFrom, string bookingTo)
     {
-        // Act
+        // Arrange
         var correctHotelId = Guid.Parse(hotelId);
         var correctBookingFrom = DateTime.Parse(bookingFrom);
         var correctBookingTo = DateTime.Parse(bookingTo);
@@ -191,7 +191,7 @@ public class BookingServiceTest
         _mapperMock.Setup(m => m.Map<List<BookingModel>>(It.IsAny<List<BookingEntity>>()))
             .Returns(BookingModelData.SortedList(correctHotelId, correctBookingFrom, correctBookingTo));
 
-        // Arrange + Assert
+        // Act + Assert
         await Assert.ThrowsAsync<ArgumentException>(async () =>
             await _bookingService.GetParticularBookings(correctHotelId, correctBookingFrom, correctBookingTo));
     }

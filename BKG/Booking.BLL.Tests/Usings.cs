@@ -2,7 +2,6 @@ global using Xunit;
 global using Moq;
 global using Shouldly;
 global using AutoMapper;
-
 global using Booking.BLL.Abstractions;
 global using Booking.BLL.Models;
 global using Booking.BLL.Services;

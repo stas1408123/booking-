@@ -1,6 +1,5 @@
 ﻿using Booking.API.Tests.AutoData.ViewModels;
 using Booking.API.Validators;
-using FluentValidation.TestHelper;
 
 namespace Booking.API.Tests.Validators;
 
@@ -16,10 +15,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_TitleIsNull_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetNullTitle;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -29,10 +28,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_TitleIsEmpty_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetEmptyTitle;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -42,10 +41,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_TitleLengthIsInvalid_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetInvalidLengthTitle;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -55,10 +54,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_TitleIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetValidTitle;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -68,10 +67,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_AddressIsNull_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetNullAddress;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -81,10 +80,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_AddressIsEmpty_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetEmptyAddress;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -94,10 +93,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_AddressIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetValidAddress;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -107,10 +106,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_CountRoomsIsTooFew_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetTooFewCountRooms;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -120,10 +119,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_CountRoomsIsTooMuch_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetTooMuchCountRooms;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -133,10 +132,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_CountRoomsIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetValidCountRooms;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -146,10 +145,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_DescriptionIsNull_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetNullDescription;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -159,10 +158,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_DescriptionIsEmpty_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetEmptyDescription;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -172,10 +171,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_DescriptionIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetValidDescription;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -185,10 +184,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_StarsIsTooSmall_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetTooSmallStars;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -198,10 +197,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_StarsIsTooBig_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetTooBigStars;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -211,10 +210,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_StarsIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetValidStars;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -224,10 +223,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_PhoneNumberIsNull_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetNullPhoneNumber;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -237,10 +236,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_PhoneNumberIsEmpty_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetEmptyPhoneNumber;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -250,10 +249,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_PhoneNumberLengthIsTooShort_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetTooShortLengthPhoneNumber;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -263,10 +262,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_PhoneNumberLengthIsTooBig_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetTooBigLengthPhoneNumber;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -276,10 +275,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_PhoneNumberIsInvalid_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetInvalidPhoneNumber;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -289,10 +288,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_PhoneNumberIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetValidPhoneNumber;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -302,10 +301,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_OwnerIsNull_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetNullOwner;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -315,10 +314,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_OwnerIsEmpty_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetValidPhoneNumber;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -328,10 +327,10 @@ public class HotelValidatorTest
     [Fact]
     public void HotelValidator_OwnerIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = HotelViewModelData.GetCorrectOwner;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert

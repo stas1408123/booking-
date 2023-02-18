@@ -1,4 +1,3 @@
-using Booking.API;
 using Booking.API.Extensions;
 
 namespace Booking.API;

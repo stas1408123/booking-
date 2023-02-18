@@ -78,7 +78,7 @@ public class BookingController : ControllerBase
         return Ok(viewModel);
     }
 
-    [HttpDelete("delete")]
+    [HttpDelete("delete/{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         await _bookingService.Delete(id);

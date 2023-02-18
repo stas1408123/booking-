@@ -29,4 +29,8 @@
     <ProjectReference Include="..\Booking.DAL\Booking.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AutoData\" />
+  </ItemGroup>
+
 </Project>

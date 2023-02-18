@@ -1,4 +1,5 @@
 ﻿using Booking.DAL;
+using Booking.IntegrationTests.AutoData;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,19 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
             if (dbContextDescriptor != null) services.Remove(dbContextDescriptor);
 
             services.AddDbContext<BookingDbContext>(options => options.UseInMemoryDatabase("InMemoryDbForTesting"));
+
+            var sp = services.BuildServiceProvider();
+
+            using (var scope = sp.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var db = scopedServices.GetRequiredService<BookingDbContext>();
+
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                db.SaveChanges();
+            }
         });
     }
 }
