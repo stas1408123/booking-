@@ -1,8 +1,4 @@
-﻿using Booking.API.Tests.AutoData.ViewModels;
-using Booking.API.Validators;
-using FluentValidation.TestHelper;
-
-namespace Booking.API.Tests.Validators;
+﻿namespace Booking.API.Tests.Validators;
 
 public class BookingValidatorTest
 {
@@ -16,10 +12,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_BookingFromHaveThePastDate_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetInvalidBookingFrom;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -29,10 +25,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_BookingFromHaveValidDate_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetValidBookingFrom;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -42,10 +38,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_BookingToHaveThePastDate_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetInvalidBookingTo;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -55,10 +51,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_BookingToHaveValidDate_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetValidBookingTo;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -68,10 +64,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_DescriptionIsNull_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetNullDescription;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -81,10 +77,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_DescriptionIsEmpty_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetEmptyDescription;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -94,10 +90,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_DescriptionIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetValidDescription;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -107,10 +103,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_PriceIsInvalid_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetInvalidPrice;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -120,10 +116,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_PriceIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetValidPrice;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -133,10 +129,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_HotelIdIsEmpty_ReturnsError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetEmptyHotelId;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
@@ -146,10 +142,10 @@ public class BookingValidatorTest
     [Fact]
     public void BookingValidator_HotelIdIsValid_ReturnsNotError()
     {
-        // Act
+        // Arrange
         var viewModel = BookingViewModelData.GetValidHotelId;
 
-        // Arrange
+        // Act
         var result = _validator.TestValidate(viewModel);
 
         // Assert
