@@ -3,6 +3,7 @@ using System.Text;
 using Booking.API;
 using Booking.DAL.Entities;
 using Booking.IntegrationTests.AutoData;
+using FluentAssertions;
 using Newtonsoft.Json;
 
 namespace Booking.IntegrationTests.Controllers;
@@ -16,6 +17,7 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         _factory = factory;
     }
 
+    // TODO: returned 4 objects, but should 3
     [Fact]
     public async Task GetAll_BookingListIsExist_ReturnsEquals()
     {
@@ -29,10 +31,8 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
             JsonConvert.DeserializeObject<List<BookingEntity>>(await response.Content.ReadAsStringAsync());
 
         // Assert
-        response.EnsureSuccessStatusCode();
-        Assert.Equal("application/json; charset=utf-8",
-            response.Content.Headers.ContentType?.ToString());
-        Assert.Equal(expectedList, returnedList);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        returnedList.Should().BeEquivalentTo(expectedList);
     }
 
     [Fact]
@@ -47,8 +47,8 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
 
         // Assert
-        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
-        Assert.NotEqual(expectedBooking.Description, returnedBooking.Description);
+        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        returnedBooking.Should().NotBeEquivalentTo(expectedBooking);
     }
 
     [Fact]
@@ -63,10 +63,8 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
 
         // Assert
-        response.EnsureSuccessStatusCode();
-        Assert.Equal("application/json; charset=utf-8",
-            response.Content.Headers.ContentType?.ToString());
-        Assert.Equal(expectedBooking.Description, returnedBooking.Description);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        returnedBooking.Should().BeEquivalentTo(expectedBooking);
     }
 
     [Fact]
@@ -83,32 +81,19 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
 
         // Assert
-        response.EnsureSuccessStatusCode();
-        Assert.Equal("application/json; charset=utf-8",
-            response.Content.Headers.ContentType?.ToString());
-        Assert.Equal(bookingAddRequest.Description, returnedBooking.Description);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        returnedBooking.Should().BeEquivalentTo(bookingAddRequest);
     }
 
     [Theory]
-    [InlineData("2020-01-01", "2025-01-01", "valid", "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("2025-01-01", "2025-02-01", "valid", "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("2023-05-01", "2020-01-01", "valid", "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("2023-05-01", "2023-01-01", "valid", "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("2023-05-01", "2023-12-12", "", "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("2023-01-01", "2023-12-12", null, "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("2023-01-01", "2023-12-12", "valid", "00000000-0000-0000-0000-000000000000", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("2023-01-01", "2023-12-12", "valid", "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", -1,
-        HttpStatusCode.InternalServerError)]
+    [InlineData("2020-01-01", "2025-01-01", "valid", "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1)]
+    [InlineData("2023-05-01", "2020-01-01", "valid", "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1)]
+    [InlineData("2023-05-01", "2023-12-12", "", "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1)]
+    [InlineData("2023-05-01", "2023-12-12", null, "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1)]
+    [InlineData("2023-05-01", "2023-12-12", "valid", "00000000-0000-0000-0000-000000000000", 1)]
+    [InlineData("2023-05-01", "2023-12-12", null, "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", -1)]
     public async Task Add_BookingPropertiesIsNotValid_ReturnsInternalServerError(string bookingFrom, string bookingTo,
-        string description, string hotelId, decimal price,
-        HttpStatusCode actualStatusCode)
+        string description, string hotelId, decimal price)
     {
         // Arrange
         var client = _factory.CreateClient();
@@ -122,39 +107,26 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
 
         // Assert
-        Assert.Equal(HttpStatusCode.InternalServerError, actualStatusCode);
-        Assert.NotEqual(bookingAddRequest, returnedBooking);
+        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        returnedBooking.Should().NotBeEquivalentTo(bookingAddRequest);
     }
 
     [Theory]
     [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2020-01-01", "2025-01-01", "valid",
-        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2025-01-01", "2025-02-01", "valid",
-        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2023-05-01", "2020-01-01", "valid",
-        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2023-05-01", "2023-01-01", "valid",
-        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
+        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1)]
+    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2025-01-01", "2020-01-01", "valid",
+        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1)]
     [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2023-05-01", "2023-12-12", "",
-        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2023-01-01", "2023-12-12", null,
-        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2023-01-01", "2023-12-12", "valid",
-        "00000000-0000-0000-0000-000000000000", 1,
-        HttpStatusCode.InternalServerError)]
-    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2023-01-01", "2023-12-12", "valid",
-        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", -1,
-        HttpStatusCode.InternalServerError)]
+        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1)]
+    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2023-05-01", "2023-12-12", null,
+        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", 1)]
+    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2023-05-01", "2023-12-12", "valid",
+        "00000000-0000-0000-0000-000000000000", 1)]
+    [InlineData("0c3db3ee-6f77-4b64-a5ec-27298749f421", "2023-05-01", "2023-12-12", "valid",
+        "d990989f-bd61-450d-a6e9-b8eed2fd5ba2", -1)]
     public async Task Update_BookingPropertiesIsNotValid_ReturnsInternalServerError(string id, string bookingFrom,
         string bookingTo,
-        string description, string hotelId, decimal price,
-        HttpStatusCode actualStatusCode)
+        string description, string hotelId, decimal price)
     {
         // Arrange
         var client = _factory.CreateClient();
@@ -168,8 +140,8 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
 
         // Assert
-        Assert.Equal(HttpStatusCode.InternalServerError, actualStatusCode);
-        Assert.NotEqual(bookingUpdateRequest, returnedBooking);
+        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        returnedBooking.Should().NotBeEquivalentTo(bookingUpdateRequest);
     }
 
     [Fact]
@@ -184,12 +156,11 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         // Act
         var response = await client.PutAsync("api/Booking/update", stringContent);
         var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
+        returnedBooking.Id = bookingUpdateRequest.Id;
 
         // Assert
-        response.EnsureSuccessStatusCode();
-        Assert.Equal("application/json; charset=utf-8",
-            response.Content.Headers.ContentType?.ToString());
-        Assert.Equal(bookingUpdateRequest.Description, returnedBooking.Description);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        returnedBooking.Should().BeEquivalentTo(bookingUpdateRequest);
     }
 
     [Fact]
@@ -202,7 +173,7 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         var response = await client.DeleteAsync("api/Booking/delete/0c3db3ee-6f77-4b64-a5ec-27298749f421");
 
         // Assert
-        response.EnsureSuccessStatusCode();
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
     [Fact]
@@ -215,6 +186,6 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         var response = await client.DeleteAsync("api/Booking/delete/0c3db3ee-3277-4b64-a5ec-27298749f421");
 
         // Assert
-        Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
     }
 }

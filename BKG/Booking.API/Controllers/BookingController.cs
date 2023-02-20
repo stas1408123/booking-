@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Booking.API.Validators;
 using Booking.API.ViewModels;
 using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
@@ -27,7 +28,13 @@ public class BookingController : ControllerBase
     [HttpPost("get-particular-bookings")]
     public async Task<IActionResult> GetParticularBookings(BookingViewModel viewModel)
     {
-        await _validator.ValidateAndThrowAsync(viewModel);
+        await _validator.ValidateAsync(viewModel, options =>
+        {
+            options.ThrowOnFailures();
+            options.IncludeProperties(x => x.HotelId);
+            options.IncludeProperties(x => x.BookingFrom);
+            options.IncludeProperties(x => x.BookingTo);
+        });
 
         var bookingsModels =
             await _bookingService.GetParticularBookings(viewModel.HotelId, viewModel.BookingFrom,

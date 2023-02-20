@@ -30,6 +30,7 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
 
+
                 db.SaveChanges();
             }
         });

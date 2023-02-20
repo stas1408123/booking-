@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Booking.DAL.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    [Migration("20230205174213_Initial-Db")]
+    [Migration("20230219180957_Initial-Db")]
     partial class InitialDb
     {
         /// <inheritdoc />
@@ -51,6 +51,35 @@ namespace Booking.DAL.Migrations
                     b.HasIndex("HotelId");
 
                     b.ToTable("Bookings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0c3db3ee-6f77-4b64-a5ec-27298749f421"),
+                            BookingFrom = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookingTo = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Nvm",
+                            HotelId = new Guid("d990989f-bd61-450d-a6e9-b8eed2fd5ba2"),
+                            Price = 1m
+                        },
+                        new
+                        {
+                            Id = new Guid("819f9de9-10d3-4459-a950-1561a34f0b9d"),
+                            BookingFrom = new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookingTo = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Nvm2",
+                            HotelId = new Guid("d990989f-bd61-450d-a6e9-b8eed2fd5ba2"),
+                            Price = 2m
+                        },
+                        new
+                        {
+                            Id = new Guid("aae87a10-736e-47c0-9dba-b8550f902d0c"),
+                            BookingFrom = new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookingTo = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Idk",
+                            HotelId = new Guid("60e6d76a-9c13-488b-afce-a3b21dbc3177"),
+                            Price = 3m
+                        });
                 });
 
             modelBuilder.Entity("Booking.DAL.Entities.HotelEntity", b =>
@@ -60,7 +89,6 @@ namespace Booking.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CountRooms")
@@ -70,36 +98,61 @@ namespace Booking.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Owner")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Stars")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Address")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Address] IS NOT NULL");
 
                     b.HasIndex("PhoneNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[PhoneNumber] IS NOT NULL");
 
                     b.HasIndex("Title")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[Title] IS NOT NULL");
 
                     b.ToTable("Hotels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("d990989f-bd61-450d-a6e9-b8eed2fd5ba2"),
+                            Address = "Nvm",
+                            CountRooms = 125,
+                            CreatedTime = new DateTime(2023, 2, 19, 18, 9, 57, 707, DateTimeKind.Utc).AddTicks(7234),
+                            Description = "Nvm",
+                            Owner = "Dima Hatetovski",
+                            PhoneNumber = "+375336869225",
+                            Stars = 5,
+                            Title = "GYM HOTEL"
+                        },
+                        new
+                        {
+                            Id = new Guid("60e6d76a-9c13-488b-afce-a3b21dbc3177"),
+                            Address = "Idk",
+                            CountRooms = 233,
+                            CreatedTime = new DateTime(2023, 2, 19, 18, 9, 57, 707, DateTimeKind.Utc).AddTicks(7238),
+                            Description = "Idk",
+                            Owner = "Pashok Gagarin",
+                            PhoneNumber = "+123456802232",
+                            Stars = 3,
+                            Title = "Pashok Hotel"
+                        });
                 });
 
             modelBuilder.Entity("Booking.DAL.Entities.BookingEntity", b =>

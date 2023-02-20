@@ -86,18 +86,15 @@ public class BookingServiceTest
 
 
     [Fact]
-    public async Task DeleteById_WhenEntityNotExist_ShouldReturnNull()
+    public async Task DeleteById_WhenEntityNotExist_ShouldReturnsException()
     {
         // Arrange
         _bookingRepoMock.Setup(r => r.Delete(It.IsAny<Guid>()))
             .ReturnsAsync(value: null);
 
-        // Act
-        var result = await _bookingService.Delete(It.IsAny<Guid>());
-
-        // Assert
-        _bookingRepoMock.Verify(r => r.Delete(It.IsAny<Guid>()));
-        result.Should().BeNull();
+        // Act + Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(
+            async () => await _bookingService.Delete(It.IsAny<Guid>()));
     }
 
     [Fact]
