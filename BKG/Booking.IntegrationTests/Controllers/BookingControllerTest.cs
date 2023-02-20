@@ -1,10 +1,7 @@
 ﻿using System.Net;
-using System.Text;
 using Booking.API;
-using Booking.DAL.Entities;
 using Booking.IntegrationTests.AutoData;
 using FluentAssertions;
-using Newtonsoft.Json;
 
 namespace Booking.IntegrationTests.Controllers;
 
@@ -17,22 +14,57 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         _factory = factory;
     }
 
-    // TODO: returned 4 objects, but should 3
     [Fact]
-    public async Task GetAll_BookingListIsExist_ReturnsEquals()
+    public async Task GetAll_BookingListIsExist_ReturnsValidList()
     {
         // Arrange
         var client = _factory.CreateClient();
-        var expectedList = BookingTestData.CreateExpectedBookingList();
+        var expectedList = BookingTestData.ExpectedBookingList();
+        BookingTestData.ReinitializeDbForTests(_factory);
 
         // Act
         var response = await client.GetAsync("/api/Booking");
-        var returnedList =
-            JsonConvert.DeserializeObject<List<BookingEntity>>(await response.Content.ReadAsStringAsync());
+        var returnedList = BookingTestData.GetBookingList(response).Result;
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        expectedList.Should().BeEquivalentTo(returnedList);
+    }
+
+    [Fact]
+    public async Task GetParticularBookings_BookingsIsValid_ReturnsValidBookingList()
+    {
+        // Arrange
+        var client = _factory.CreateClient();
+        var getParticularBookings = BookingTestData.ValidGetParticularBookings;
+        var expectedList = BookingTestData.ExpectedGetParticularBookings();
+        var stringContent = BookingTestData.NewStringContent(getParticularBookings);
+
+        // Act
+        var response = await client.PostAsync("/api/Booking/get-particular-bookings", stringContent);
+        var returnedList = BookingTestData.GetBookingList(response).Result;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         returnedList.Should().BeEquivalentTo(expectedList);
+    }
+
+    [Theory]
+    [InlineData("d990989f-bd61-450d-a6e9-b8eed2fd5ba2", "2020-01-01", "2026-01-01")]
+    [InlineData("d990989f-bd61-450d-a6e9-b8eed2fd5ba2", "2026-01-01", "2020-01-01")]
+    public async Task GetParticularBookings_BookingsIsInvalid_ReturnsInternalServerError(string hotelId,
+        string bookingFrom, string bookingTo)
+    {
+        // Arrange
+        var client = _factory.CreateClient();
+        var getParticularBookings = BookingTestData.InvalidGetParticularBookings(hotelId, bookingFrom, bookingTo);
+        var stringContent = BookingTestData.NewStringContent(getParticularBookings);
+
+        // Act
+        var response = await client.PostAsync("/api/Booking/get-particular-bookings", stringContent);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
     }
 
     [Fact]
@@ -44,7 +76,7 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
 
         // Act
         var response = await client.GetAsync("api/Booking/78aaa6d0-f338-422f-9229-6cfad70ead05");
-        var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
+        var returnedBooking = BookingTestData.GetByIdBooking(response).Result;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
@@ -60,7 +92,7 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
 
         // Act
         var response = await client.GetAsync("api/Booking/0c3db3ee-6f77-4b64-a5ec-27298749f421");
-        var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
+        var returnedBooking = BookingTestData.GetByIdBooking(response).Result;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -73,12 +105,11 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         // Arrange
         var client = _factory.CreateClient();
         var bookingAddRequest = BookingTestData.ValidBookingToAdd;
-        var stringContent = new StringContent(JsonConvert.SerializeObject(bookingAddRequest), Encoding.UTF8,
-            "application/json");
+        var stringContent = BookingTestData.NewStringContent(bookingAddRequest);
 
         // Act
         var response = await client.PostAsync("api/Booking/add", stringContent);
-        var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
+        var returnedBooking = BookingTestData.GetByIdBooking(response).Result;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -99,12 +130,11 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         var client = _factory.CreateClient();
         var bookingAddRequest =
             BookingTestData.InvalidBookingToAdd(bookingFrom, bookingTo, description, price, hotelId);
-        var stringContent = new StringContent(JsonConvert.SerializeObject(bookingAddRequest), Encoding.UTF8,
-            "application/json");
+        var stringContent = BookingTestData.NewStringContent(bookingAddRequest);
 
         // Act
         var response = await client.PostAsync("api/Booking/add", stringContent);
-        var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
+        var returnedBooking = BookingTestData.GetByIdBooking(response).Result;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
@@ -132,12 +162,11 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         var client = _factory.CreateClient();
         var bookingUpdateRequest =
             BookingTestData.InvalidBookingToUpdate(id, bookingFrom, bookingTo, description, price, hotelId);
-        var stringContent = new StringContent(JsonConvert.SerializeObject(bookingUpdateRequest), Encoding.UTF8,
-            "application/json");
+        var stringContent = BookingTestData.NewStringContent(bookingUpdateRequest);
 
         // Act
         var response = await client.PutAsync("api/Booking/update", stringContent);
-        var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
+        var returnedBooking = BookingTestData.GetByIdBooking(response).Result;
 
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
@@ -150,12 +179,11 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
         // Arrange
         var client = _factory.CreateClient();
         var bookingUpdateRequest = BookingTestData.ValidBookingToUpdate;
-        var stringContent = new StringContent(JsonConvert.SerializeObject(bookingUpdateRequest), Encoding.UTF8,
-            "application/json");
+        var stringContent = BookingTestData.NewStringContent(bookingUpdateRequest);
 
         // Act
         var response = await client.PutAsync("api/Booking/update", stringContent);
-        var returnedBooking = JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
+        var returnedBooking = BookingTestData.GetByIdBooking(response).Result;
         returnedBooking.Id = bookingUpdateRequest.Id;
 
         // Assert
@@ -164,7 +192,7 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
     }
 
     [Fact]
-    public async Task Delete_BookingExist_ReturnsSuccess()
+    public async Task Delete_BookingIsExist_ReturnsSuccess()
     {
         // Arrange
         var client = _factory.CreateClient();
@@ -177,7 +205,7 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
     }
 
     [Fact]
-    public async Task Delete_BookingNotExist_ReturnsInternalServerError()
+    public async Task Delete_BookingIsNotExist_ReturnsInternalServerError()
     {
         // Arrange
         var client = _factory.CreateClient();

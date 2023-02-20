@@ -31,7 +31,7 @@ public class HotelConfiguration : IEntityTypeConfiguration<HotelEntity>
                 Description = "Nvm",
                 Stars = 5,
                 Owner = "Dima Hatetovski",
-                CreatedTime = DateTime.UtcNow,
+                CreatedTime = DateTime.Parse("2020-01-01"),
                 CountRooms = 125,
                 PhoneNumber = "+375336869225",
                 Address = "Nvm"
@@ -43,7 +43,7 @@ public class HotelConfiguration : IEntityTypeConfiguration<HotelEntity>
                 Description = "Idk",
                 Stars = 3,
                 Owner = "Pashok Gagarin",
-                CreatedTime = DateTime.UtcNow,
+                CreatedTime = DateTime.Parse("2023-01-01"),
                 CountRooms = 233,
                 PhoneNumber = "+123456802232",
                 Address = "Idk"

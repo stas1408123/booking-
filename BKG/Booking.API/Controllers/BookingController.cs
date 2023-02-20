@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Booking.API.Validators;
 using Booking.API.ViewModels;
 using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
