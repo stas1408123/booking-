@@ -8,7 +8,6 @@ public class BookingDbContext : DbContext
 {
     public BookingDbContext(DbContextOptions<BookingDbContext> options) : base(options)
     {
-        Database.EnsureCreated();
     }
 
     public DbSet<HotelEntity> Hotels { get; set; }
