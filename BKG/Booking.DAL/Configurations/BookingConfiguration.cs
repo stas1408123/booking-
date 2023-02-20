@@ -18,27 +18,31 @@ public class BookingConfiguration : IEntityTypeConfiguration<BookingEntity>
         builder.Property(booking => booking.Price)
             .HasColumnType("decimal(18,4)");
 
-        builder.HasData(new BookingEntity
+        builder.HasData(
+            new BookingEntity
             {
                 Id = Guid.Parse("0c3db3ee-6f77-4b64-a5ec-27298749f421"),
-                BookingFrom = DateTime.UtcNow,
-                BookingTo = DateTime.UtcNow,
+                BookingFrom = DateTime.Parse("2023-05-01"),
+                BookingTo = DateTime.Parse("2025-01-01"),
+                Price = 1,
                 Description = "Nvm",
                 HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
             },
             new BookingEntity
             {
                 Id = Guid.Parse("819f9de9-10d3-4459-a950-1561a34f0b9d"),
-                BookingFrom = DateTime.UtcNow,
-                BookingTo = DateTime.UtcNow,
+                BookingFrom = DateTime.Parse("2023-06-01"),
+                BookingTo = DateTime.Parse("2024-01-01"),
+                Price = 2,
                 Description = "Nvm2",
                 HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
             },
             new BookingEntity
             {
                 Id = Guid.Parse("aae87a10-736e-47c0-9dba-b8550f902d0c"),
-                BookingFrom = DateTime.UtcNow,
-                BookingTo = DateTime.UtcNow,
+                BookingFrom = DateTime.Parse("2023-08-01"),
+                BookingTo = DateTime.Parse("2023-12-01"),
+                Price = 3,
                 Description = "Idk",
                 HotelId = Guid.Parse("60e6d76a-9c13-488b-afce-a3b21dbc3177")
             });
