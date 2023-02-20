@@ -57,6 +57,8 @@ public class GenericService<TEntity, TModel> : BaseService<TEntity>, IGenericSer
     {
         var entity = await GenericRepository.Delete(id);
 
+        if (entity is null) throw new ArgumentNullException($"Cannot find {typeof(TModel).Name} by id: {id}");
+
         var model = Mapper.Map<TModel>(entity);
 
         return model;

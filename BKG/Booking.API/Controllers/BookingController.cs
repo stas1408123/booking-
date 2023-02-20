@@ -4,7 +4,6 @@ using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Booking.API.Controllers;
 
@@ -28,7 +27,13 @@ public class BookingController : ControllerBase
     [HttpPost("get-particular-bookings")]
     public async Task<IActionResult> GetParticularBookings(BookingViewModel viewModel)
     {
-        await _validator.ValidateAndThrowAsync(viewModel);
+        await _validator.ValidateAsync(viewModel, options =>
+        {
+            options.ThrowOnFailures();
+            options.IncludeProperties(x => x.HotelId);
+            options.IncludeProperties(x => x.BookingFrom);
+            options.IncludeProperties(x => x.BookingTo);
+        });
 
         var bookingsModels =
             await _bookingService.GetParticularBookings(viewModel.HotelId, viewModel.BookingFrom,
@@ -78,7 +83,7 @@ public class BookingController : ControllerBase
         return Ok(viewModel);
     }
 
-    [HttpDelete("delete")]
+    [HttpDelete("delete/{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         await _bookingService.Delete(id);
