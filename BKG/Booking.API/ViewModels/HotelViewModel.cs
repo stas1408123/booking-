@@ -8,5 +8,6 @@ public class HotelViewModel
     public string? Owner { get; set; }
     public int Stars { get; set; }
     public int CountRooms { get; set; }
+    public DateTime CreatedTime { get; set; }
     public string? PhoneNumber { get; set; }
 }
