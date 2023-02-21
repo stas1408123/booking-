@@ -58,4 +58,21 @@ public static class BookingViewModelData
     {
         HotelId = Guid.NewGuid()
     };
+
+    internal static BookingViewModel ValidViewModelForMapping => new()
+    {
+        BookingFrom = DateTime.Parse("2023-05-01"),
+        BookingTo = DateTime.Parse("2025-01-01"),
+        Price = 1,
+        Description = "Nvm",
+        HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
+    };
+
+    internal static BookingViewModel InvalidViewModelForMapping => new()
+    {
+        BookingFrom = DateTime.Parse("2023-05-01"),
+        BookingTo = DateTime.Parse("2025-01-01"),
+        Price = 1,
+        Description = null,
+    };
 }
