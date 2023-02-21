@@ -150,7 +150,7 @@ public class HotelControllerTest : IClassFixture<CustomWebApplicationFactory<Pro
 
         // Act
         var response = await client.PostAsync("api/Hotel/add", stringContent);
-        var returnedHotel = HotelTestData.GetByIdHotel(response).Result;
+        var returnedHotel = HotelTestData.GetByIdHotelModel(response).Result;
         returnedHotel.Id = hotelUpdateRequest.Id;
 
         // Assert

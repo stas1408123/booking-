@@ -183,7 +183,7 @@ public class BookingControllerTest : IClassFixture<CustomWebApplicationFactory<P
 
         // Act
         var response = await client.PutAsync("api/Booking/update", stringContent);
-        var returnedBooking = BookingTestData.GetByIdBooking(response).Result;
+        var returnedBooking = BookingTestData.GetByIdBookingModel(response).Result;
         returnedBooking.Id = bookingUpdateRequest.Id;
 
         // Assert

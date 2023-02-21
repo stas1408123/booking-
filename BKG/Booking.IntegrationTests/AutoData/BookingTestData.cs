@@ -1,5 +1,7 @@
 ﻿using System.Text;
 using Booking.API;
+using Booking.API.ViewModels;
+using Booking.BLL.Models;
 using Booking.DAL;
 using Booking.DAL.Entities;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +11,7 @@ namespace Booking.IntegrationTests.AutoData;
 
 public static class BookingTestData
 {
-    internal static BookingEntity ExpectedBooking => new()
+    internal static BookingViewModel ExpectedBooking => new()
     {
         BookingFrom = DateTime.Parse("2023-05-01"),
         BookingTo = DateTime.Parse("2025-01-01"),
@@ -18,7 +20,7 @@ public static class BookingTestData
         HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
     };
 
-    internal static BookingEntity ValidBookingToAdd => new()
+    internal static BookingViewModel ValidBookingToAdd => new()
     {
         BookingFrom = DateTime.Parse("2023-12-12"),
         BookingTo = DateTime.Parse("2024-03-01"),
@@ -27,7 +29,7 @@ public static class BookingTestData
         HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
     };
 
-    internal static BookingEntity ValidBookingToUpdate => new()
+    internal static BookingModel ValidBookingToUpdate => new()
     {
         Id = Guid.Parse("0c3db3ee-6f77-4b64-a5ec-27298749f421"),
         BookingFrom = DateTime.Parse("2023-12-12"),
@@ -37,16 +39,16 @@ public static class BookingTestData
         HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2")
     };
 
-    internal static BookingEntity ValidGetParticularBookings => new()
+    internal static BookingViewModel ValidGetParticularBookings => new()
     {
         HotelId = Guid.Parse("d990989f-bd61-450d-a6e9-b8eed2fd5ba2"),
         BookingFrom = DateTime.Parse("2023-04-01"),
         BookingTo = DateTime.Parse("2026-12-12")
     };
 
-    internal static BookingEntity InvalidGetParticularBookings(string hotelId, string bookingTo, string bookingFrom)
+    internal static BookingViewModel InvalidGetParticularBookings(string hotelId, string bookingTo, string bookingFrom)
     {
-        return new BookingEntity
+        return new BookingViewModel
         {
             HotelId = Guid.Parse(hotelId),
             BookingFrom = DateTime.Parse(bookingFrom),
@@ -54,13 +56,12 @@ public static class BookingTestData
         };
     }
 
-    internal static List<BookingEntity> ExpectedGetParticularBookings()
+    internal static List<BookingViewModel> ExpectedGetParticularBookings()
     {
-        var bookingList = new List<BookingEntity>
+        var bookingList = new List<BookingViewModel>
         {
             new()
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 BookingFrom = DateTime.Parse("2023-05-01"),
                 BookingTo = DateTime.Parse("2025-01-01"),
                 Price = 1,
@@ -69,7 +70,6 @@ public static class BookingTestData
             },
             new()
             {
-                Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
                 BookingFrom = DateTime.Parse("2023-06-01"),
                 BookingTo = DateTime.Parse("2024-01-01"),
                 Price = 2,
@@ -81,13 +81,12 @@ public static class BookingTestData
         return bookingList;
     }
 
-    internal static List<BookingEntity> ExpectedBookingList()
+    internal static List<BookingViewModel> ExpectedBookingList()
     {
-        var bookingList = new List<BookingEntity>
+        var bookingList = new List<BookingViewModel>
         {
             new()
             {
-                Id = Guid.Parse("0c3db3ee-6f77-4b64-a5ec-27298749f421"),
                 BookingFrom = DateTime.Parse("2023-05-01"),
                 BookingTo = DateTime.Parse("2025-01-01"),
                 Price = 1,
@@ -96,7 +95,6 @@ public static class BookingTestData
             },
             new()
             {
-                Id = Guid.Parse("819f9de9-10d3-4459-a950-1561a34f0b9d"),
                 BookingFrom = DateTime.Parse("2023-06-01"),
                 BookingTo = DateTime.Parse("2024-01-01"),
                 Price = 2,
@@ -105,7 +103,6 @@ public static class BookingTestData
             },
             new()
             {
-                Id = Guid.Parse("aae87a10-736e-47c0-9dba-b8550f902d0c"),
                 BookingFrom = DateTime.Parse("2023-08-01"),
                 BookingTo = DateTime.Parse("2023-12-01"),
                 Price = 3,
@@ -117,10 +114,10 @@ public static class BookingTestData
         return bookingList;
     }
 
-    internal static BookingEntity InvalidBookingToUpdate(string id, string bookingFrom, string bookingTo,
+    internal static BookingModel InvalidBookingToUpdate(string id, string bookingFrom, string bookingTo,
         string description, decimal price, string hotelId)
     {
-        return new BookingEntity
+        return new BookingModel
         {
             Id = Guid.Parse(id),
             BookingFrom = DateTime.Parse(bookingFrom),
@@ -131,10 +128,10 @@ public static class BookingTestData
         };
     }
 
-    internal static BookingEntity InvalidBookingToAdd(string bookingFrom, string bookingTo, string description,
+    internal static BookingViewModel InvalidBookingToAdd(string bookingFrom, string bookingTo, string description,
         decimal price, string hotelId)
     {
-        return new BookingEntity
+        return new BookingViewModel
         {
             BookingFrom = DateTime.Parse(bookingFrom),
             BookingTo = DateTime.Parse(bookingTo),
@@ -144,19 +141,30 @@ public static class BookingTestData
         };
     }
 
-    internal static async Task<BookingEntity> GetByIdBooking(HttpResponseMessage response)
+    internal static async Task<BookingViewModel> GetByIdBooking(HttpResponseMessage response)
     {
-        return JsonConvert.DeserializeObject<BookingEntity>(await response.Content.ReadAsStringAsync());
+        return JsonConvert.DeserializeObject<BookingViewModel>(await response.Content.ReadAsStringAsync());
     }
 
-    internal static async Task<List<BookingEntity>> GetBookingList(HttpResponseMessage response)
+    internal static async Task<BookingModel> GetByIdBookingModel(HttpResponseMessage response)
     {
-        return JsonConvert.DeserializeObject<List<BookingEntity>>(await response.Content.ReadAsStringAsync());
+        return JsonConvert.DeserializeObject<BookingModel>(await response.Content.ReadAsStringAsync());
     }
 
-    internal static StringContent NewStringContent(BookingEntity bookingEntity)
+    internal static async Task<List<BookingViewModel>> GetBookingList(HttpResponseMessage response)
     {
-        return new StringContent(JsonConvert.SerializeObject(bookingEntity), Encoding.UTF8,
+        return JsonConvert.DeserializeObject<List<BookingViewModel>>(await response.Content.ReadAsStringAsync());
+    }
+
+    internal static StringContent NewStringContent(BookingViewModel bookingViewModel)
+    {
+        return new StringContent(JsonConvert.SerializeObject(bookingViewModel), Encoding.UTF8,
+            "application/json");
+    }
+
+    internal static StringContent NewStringContent(BookingModel bookingModel)
+    {
+        return new StringContent(JsonConvert.SerializeObject(bookingModel), Encoding.UTF8,
             "application/json");
     }
 
