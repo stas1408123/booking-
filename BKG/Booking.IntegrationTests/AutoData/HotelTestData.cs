@@ -1,11 +1,10 @@
-﻿using System.Text;
-using Booking.API;
+﻿using Booking.API;
 using Booking.API.ViewModels;
 using Booking.BLL.Models;
 using Booking.DAL;
-using Booking.DAL.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace Booking.IntegrationTests.AutoData;
 

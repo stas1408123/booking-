@@ -1,7 +1,7 @@
-﻿using System.Net;
-using Booking.API;
+﻿using Booking.API;
 using Booking.IntegrationTests.AutoData;
 using FluentAssertions;
+using System.Net;
 
 namespace Booking.IntegrationTests.Controllers;
 
