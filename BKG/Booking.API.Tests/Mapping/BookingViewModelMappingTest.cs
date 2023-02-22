@@ -5,7 +5,7 @@ using FluentAssertions;
 
 namespace Booking.API.Tests.Mapping;
 
-public class MappingTest
+public class BookingViewModelMappingTest
 {
     [Fact]
     public void BookingViewModelMapping_ValidMappingConfiguration_ReturnsIsValid()
@@ -36,12 +36,12 @@ public class MappingTest
     }
 
     [Fact]
-    public void BookingViewModelMapping_InvalidBookingViewModel_ReturnsIsValid()
+    public void BookingViewModelMapping_WithEmptyProperties_ReturnsIsValid()
     {
         // Arrange
         var config = new MapperConfiguration(cfg => cfg.AddProfile<BookingViewModelMapping>());
         var mapper = config.CreateMapper();
-        var bookingViewModel = BookingViewModelData.InvalidViewModelForMapping;
+        var bookingViewModel = BookingViewModelData.ViewModelWithEmptyPropertiesForMapping;
 
         // Act
         var result = mapper.Map<BookingModel>(bookingViewModel);

@@ -141,7 +141,7 @@ public class HotelViewModelData
         Address = "Nvm"
     };
 
-    internal static HotelViewModel InvalidViewModelForMapping => new()
+    internal static HotelViewModel ViewModelWithEmptyPropertiesForMapping => new()
     {
         Title = "GYM HOTEL",
         Description = null,
