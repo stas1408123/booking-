@@ -128,4 +128,26 @@ public class HotelViewModelData
     {
         Owner = "Stasyambich"
     };
+
+    internal static HotelViewModel ValidViewModelForMapping => new()
+    {
+        Title = "GYM HOTEL",
+        Description = "Nvm",
+        Stars = 5,
+        Owner = "Dima Hatetovski",
+        CreatedTime = DateTime.Parse("2020-01-01"),
+        CountRooms = 125,
+        PhoneNumber = "+375336869225",
+        Address = "Nvm"
+    };
+
+    internal static HotelViewModel ViewModelWithEmptyPropertiesForMapping => new()
+    {
+        Title = "GYM HOTEL",
+        Description = null,
+        Stars = 5,
+        Owner = "Dima Hatetovski",
+        CountRooms = 125,
+        PhoneNumber = null,
+    };
 }
