@@ -20,11 +20,20 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
-    - name: Restore dependencies
+    - name: Restore BKG dependencies
       run: |
            cd ./BKG
            dotnet restore
-    - name: Build
+    - name: Restore IdentityServer dependencies
+      run: |
+           cd ./IdentityServer
+           dotnet restore
+    - name: Build BKG
       run: |
            cd ./BKG
            dotnet build --no-restore
+    - name: Build IdentityServer
+      run: |
+           cd ./IdentityServer
+           dotnet build --no-restore
+
