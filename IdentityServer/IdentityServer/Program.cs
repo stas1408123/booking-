@@ -1,3 +1,4 @@
+using IdentityServer;
 using IdentityServer.Data;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
@@ -24,7 +25,12 @@ builder.Services.AddDbContext<AuthDbContext>(opt =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddIdentityServer();
+builder.Services.AddIdentityServer()
+    .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
+    .AddInMemoryApiResources(Configuration.GetApiResources())
+    .AddInMemoryClients(Configuration.GetClients())
+    .AddInMemoryApiScopes(Configuration.GetApiScopes())
+    .AddAspNetIdentity<ApplicationUser>();
 
 var app = builder.Build();
 
