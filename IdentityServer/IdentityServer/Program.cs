@@ -1,8 +1,8 @@
 using System.Reflection;
+using Duende.IdentityServer.EntityFramework.Storage;
 using IdentityServer;
 using IdentityServer.Data;
 using IdentityServer.Models;
-using IdentityServer4.EntityFramework.Storage;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
