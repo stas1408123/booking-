@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var assembly = typeof(Program).GetTypeInfo().Assembly.GetName().Name;
+
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
     {
         opt.Password.RequireDigit = false;
@@ -21,8 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<AuthDbContext>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<AuthDbContext>(opt => opt.UseSqlServer(connectionString));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -34,20 +36,19 @@ builder.Services.AddIdentityServer()
     .AddInMemoryApiScopes(Configuration.GetApiScopes())
     .AddAspNetIdentity<ApplicationUser>();
 
-builder.Services.AddDbContext<AuthDbContext>(opt =>
-    {
-        opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-    })
+builder.Services.AddDbContext<AuthDbContext>(opt => { opt.UseSqlServer(connectionString); })
     .AddOperationalDbContext(opt =>
     {
-        opt.ConfigureDbContext = o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-            sql => sql.MigrationsAssembly(typeof(Program).GetTypeInfo().Assembly.GetName().Name));
+        opt.ConfigureDbContext = o => o.UseSqlServer(connectionString,
+            sql => sql.MigrationsAssembly(assembly));
     })
     .AddConfigurationDbContext(opt =>
     {
-        opt.ConfigureDbContext = o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-            sql => sql.MigrationsAssembly(typeof(Program).GetTypeInfo().Assembly.GetName().Name));
+        opt.ConfigureDbContext = o => o.UseSqlServer(connectionString,
+            sql => sql.MigrationsAssembly(assembly));
     });
+
+SeedData.EnsureSeedData(connectionString);
 
 var app = builder.Build();
 
