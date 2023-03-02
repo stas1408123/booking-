@@ -1,5 +1,5 @@
-﻿using IdentityModel;
-using IdentityServer4.Models;
+﻿using Duende.IdentityServer.Models;
+using IdentityModel;
 
 namespace IdentityServer;
 
