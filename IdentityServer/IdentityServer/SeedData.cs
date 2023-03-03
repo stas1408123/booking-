@@ -46,21 +46,22 @@ public class SeedData
         {
             scope.ServiceProvider.GetService<PersistedGrantDbContext>()?.Database.Migrate();
 
-            var context = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
-            context.Database.Migrate();
+            var configurationDbContext = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+            configurationDbContext.Database.Migrate();
 
-            EnsureSeedData(context);
+            EnsureSeedData(configurationDbContext);
 
-            var ctx = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
-            ctx.Database.Migrate();
+            var authDbContext = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+            authDbContext.Database.Migrate();
+
             EnsureUsers(scope);
         }
     }
 
     private static void EnsureUsers(IServiceScope scope)
     {
-        var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        var stasyan = userMgr.FindByNameAsync("stasyan").Result;
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var stasyan = userManager.FindByNameAsync("stasyan").Result;
 
         if (stasyan is null)
         {
@@ -70,11 +71,11 @@ public class SeedData
                 Email = "StasyanBelov@gmail.com",
                 EmailConfirmed = true
             };
-            var result = userMgr.CreateAsync(stasyan, "1234").Result;
+            var result = userManager.CreateAsync(stasyan, "1234").Result;
 
             if (!result.Succeeded) throw new Exception(result.Errors.First().Description);
 
-            result = userMgr.AddClaimsAsync(stasyan, new[]
+            result = userManager.AddClaimsAsync(stasyan, new[]
             {
                 new Claim(JwtClaimTypes.Name, "Stasyan Belov"),
                 new Claim(JwtClaimTypes.GivenName, "Stasyan"),
@@ -85,7 +86,7 @@ public class SeedData
             if (!result.Succeeded) throw new Exception(result.Errors.First().Description);
         }
 
-        var danilka = userMgr.FindByNameAsync("danilka").Result;
+        var danilka = userManager.FindByNameAsync("danilka").Result;
 
         if (danilka is null)
         {
@@ -95,11 +96,11 @@ public class SeedData
                 Email = "DanilkaFeo@gmail.com",
                 EmailConfirmed = true
             };
-            var result = userMgr.CreateAsync(danilka, "1234").Result;
+            var result = userManager.CreateAsync(danilka, "1234").Result;
 
             if (!result.Succeeded) throw new Exception(result.Errors.First().Description);
 
-            result = userMgr.AddClaimsAsync(danilka, new[]
+            result = userManager.AddClaimsAsync(danilka, new[]
             {
                 new Claim(JwtClaimTypes.Name, "Danilka Feo"),
                 new Claim(JwtClaimTypes.GivenName, "Danilka"),

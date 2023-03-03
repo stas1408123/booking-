@@ -3,6 +3,7 @@ using Duende.IdentityServer.EntityFramework.Storage;
 using IdentityServer;
 using IdentityServer.Data;
 using IdentityServer.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +49,22 @@ builder.Services.AddDbContext<AuthDbContext>(opt => { opt.UseSqlServer(connectio
             sql => sql.MigrationsAssembly(assembly));
     });
 
+builder.Services.AddAuthentication(config =>
+    {
+        config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        config.DefaultChallengeScheme = "oidc";
+    })
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddOpenIdConnect("oidc", config =>
+    {
+        config.Authority = "https://localhost:7193";
+        config.ClientId = "client_id";
+        config.ClientSecret = "client_secret";
+        config.SaveTokens = true;
+
+        config.ResponseType = "code";
+    });
+
 SeedData.EnsureSeedData(connectionString);
 
 var app = builder.Build();
@@ -61,6 +78,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseIdentityServer();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

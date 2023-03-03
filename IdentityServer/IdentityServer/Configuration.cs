@@ -1,4 +1,5 @@
-﻿using Duende.IdentityServer.Models;
+﻿using Duende.IdentityServer;
+using Duende.IdentityServer.Models;
 using IdentityModel;
 
 namespace IdentityServer;
@@ -32,7 +33,12 @@ public static class Configuration
                 ClientSecrets = { new Secret("client_secret".ToSha256()) },
 
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
-                AllowedScopes = { "bookingAPI" }
+                AllowedScopes =
+                {
+                    "bookingAPI",
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                },
             }
         };
     }
