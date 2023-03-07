@@ -1,4 +1,5 @@
 using Booking.API.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Booking.API;
 
@@ -15,6 +16,20 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.Authority = "https://localhost:7291";
+                options.RequireHttpsMetadata = false;
+                options.Audience = "BookingAPI";
+            });
+        builder.Services.AddAuthorization();
+
         var app = builder.Build();
         var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
@@ -30,6 +45,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
