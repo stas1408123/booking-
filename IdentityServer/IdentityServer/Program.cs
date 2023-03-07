@@ -23,12 +23,12 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
     .AddEntityFrameworkStores<AuthDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AuthDbContext>(opt => opt.UseSqlServer(connectionString));
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddIdentityServer()
     .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
@@ -71,17 +71,24 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    //app.UseSwagger();
+    //app.UseSwaggerUI();
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseStaticFiles();
 
 app.UseIdentityServer();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
