@@ -9,7 +9,7 @@ namespace Booking.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+[Authorize("BookingAPI")]
 public class GenericController<TModel, TViewModel> : ControllerBase
     where TModel : BaseModel
     where TViewModel : class
