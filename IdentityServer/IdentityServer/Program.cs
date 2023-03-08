@@ -49,6 +49,8 @@ builder.Services.AddDbContext<AuthDbContext>(opt => { opt.UseSqlServer(connectio
             sql => sql.MigrationsAssembly(assembly));
     });
 
+
+//builder.Services.AddAuthentication();
 builder.Services.AddAuthentication(config =>
     {
         config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -57,7 +59,7 @@ builder.Services.AddAuthentication(config =>
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddOpenIdConnect("oidc", config =>
     {
-        config.Authority = "https://localhost:7193";
+        config.Authority = "https://localhost:5001";
         config.ClientId = "client_id";
         config.ClientSecret = "client_secret";
         config.SaveTokens = true;

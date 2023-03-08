@@ -19,7 +19,7 @@ public static class Configuration
     {
         return new List<ApiResource>
         {
-            new("bookingAPI")
+            new("BookingAPI")
         };
     }
 
@@ -29,15 +29,26 @@ public static class Configuration
         {
             new()
             {
+                ClientId = "client_id_booking",
+                ClientSecrets = { new Secret("client_secret_booking".ToSha256()) },
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                AllowedCorsOrigins = { "https://localhost:10001" },
+                AllowedScopes =
+                {
+                    "BookingAPI",
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile
+                }
+            },
+            new()
+            {
                 ClientId = "client_id",
                 ClientSecrets = { new Secret("client_secret".ToSha256()) },
 
                 AllowedGrantTypes = GrantTypes.ClientCredentials,
                 AllowedScopes =
                 {
-                    "bookingAPI",
-                    IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile,
+                    "BookingAPI"
                 },
             }
         };
@@ -47,7 +58,7 @@ public static class Configuration
     {
         return new ApiScope[]
         {
-            new("bookingAPI")
+            new("BookingAPI")
         };
     }
 }
