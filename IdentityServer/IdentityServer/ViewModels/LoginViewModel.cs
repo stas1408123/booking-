@@ -9,5 +9,8 @@ namespace IdentityServer.ViewModels
         public string? UserName { get; set; }
         [Required]
         public string? Password { get; set; }
+        public string? ReturnUrl { get; set; }
+
+        public IList<AuthenticationScheme>? ExternalLogins { get; set; }
     }
 }
