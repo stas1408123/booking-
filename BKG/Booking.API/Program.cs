@@ -96,7 +96,8 @@ internal static class CustomExtensionsMethods
                         TokenUrl = new Uri("https://localhost:5001/connect/token"),
                         Scopes = new Dictionary<string, string>
                         {
-                            { "BookingAPI", "Booking API" }
+                            { "BookingAPI", "Booking API" },
+                            { "TestScope", "Scope for testing" }
                         }
                     }
                 }
