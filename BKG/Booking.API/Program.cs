@@ -1,8 +1,11 @@
+using Booking.API.Constants.Authorization;
 using Booking.API.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ScopeAuthorizationRequirement;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Booking.API;
@@ -23,7 +26,12 @@ public class Program
         builder.Services.AddCustomSwaggerGen();
 
         builder.Services.AddCustomAuthentication();
-        builder.Services.AddAuthorization();
+
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy(PolicyBasedAuthorizationParameters.AllMethodsAllowedPolicy, 
+                policy => policy.RequireScope(PolicyBasedAuthorizationParameters.AllMethodsAllowedScopeRequired));
+        });
 
         var app = builder.Build();
         var logger = app.Services.GetRequiredService<ILogger<Program>>();
@@ -90,7 +98,8 @@ internal static class CustomExtensionsMethods
                         TokenUrl = new Uri("https://localhost:5001/connect/token"),
                         Scopes = new Dictionary<string, string>
                         {
-                            { "BookingAPI", "Booking API" }
+                            { "BookingAPI", "Booking API" },
+                            { "TestScope", "Scope for testing" }
                         }
                     }
                 }
