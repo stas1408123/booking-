@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Booking.API.Constants.Authorization;
 using Booking.API.ViewModels;
 using Booking.BLL.Abstractions;
 using Booking.BLL.Models;
@@ -10,7 +11,7 @@ namespace Booking.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize("ValidScopesOnly")]
+[Authorize(PolicyBasedAuthorizationParameters.AllMethodsAllowedScopeRequired)]
 public class BookingController : ControllerBase
 {
     private readonly IBookingService _bookingService;

@@ -1,3 +1,4 @@
+using Booking.API.Constants.Authorization;
 using Booking.API.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -28,7 +29,8 @@ public class Program
 
         builder.Services.AddAuthorization(options =>
         {
-            options.AddPolicy("ValidScopesOnly", policy => policy.RequireScope("BookingAPI"));
+            options.AddPolicy(PolicyBasedAuthorizationParameters.AllMethodsAllowedPolicy, 
+                policy => policy.RequireScope(PolicyBasedAuthorizationParameters.AllMethodsAllowedScopeRequired));
         });
 
         var app = builder.Build();
