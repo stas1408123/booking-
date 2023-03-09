@@ -11,7 +11,7 @@ public static class BookingViewModelData
 
     internal static BookingViewModel GetValidBookingFrom = new()
     {
-        BookingFrom = DateTime.Parse("2023-03-01")
+        BookingFrom = DateTime.Parse("2024-03-01")
     };
 
     internal static BookingViewModel GetInvalidBookingTo = new()

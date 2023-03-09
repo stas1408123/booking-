@@ -138,8 +138,8 @@ public class BookingServiceTest
     }
 
     [Theory]
-    [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2023-03-01", "2024-01-01")]
-    [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2023-03-01", "2026-01-01")]
+    [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2024-03-01", "2025-01-01")]
+    [InlineData("c839050c-e854-414a-93ea-f558e993e75e", "2024-03-01", "2026-01-01")]
     public async Task GetParticularBookings_WhenBookingDataIsCorrect_ShouldReturnListOfModels(string hotelId,
         string bookingFrom, string bookingTo)
     {

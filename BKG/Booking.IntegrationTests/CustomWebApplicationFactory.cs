@@ -1,4 +1,5 @@
 ﻿using Booking.DAL;
+using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,8 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
             if (dbContextDescriptor != null) services.Remove(dbContextDescriptor);
 
             services.AddDbContext<BookingDbContext>(options => options.UseInMemoryDatabase("InMemoryDbForTesting"));
+
+            services.AddSingleton<IPolicyEvaluator, FakeAuthEvaluator>();
 
             var sp = services.BuildServiceProvider();
 
