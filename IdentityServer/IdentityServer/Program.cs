@@ -27,9 +27,6 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AuthDbContext>(opt => opt.UseSqlServer(connectionString));
 
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
 builder.Services.AddIdentityServer()
     .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
     .AddInMemoryApiResources(Configuration.GetApiResources())
@@ -49,22 +46,11 @@ builder.Services.AddDbContext<AuthDbContext>(opt => { opt.UseSqlServer(connectio
             sql => sql.MigrationsAssembly(assembly));
     });
 
-
-//builder.Services.AddAuthentication();
-builder.Services.AddAuthentication(config =>
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
     {
-        config.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        config.DefaultChallengeScheme = "oidc";
-    })
-    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddOpenIdConnect("oidc", config =>
-    {
-        config.Authority = "https://localhost:5001";
-        config.ClientId = "client_id";
-        config.ClientSecret = "client_secret";
-        config.SaveTokens = true;
-
-        config.ResponseType = "code";
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
     });
 
 SeedData.EnsureSeedData(connectionString);
@@ -73,8 +59,6 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    //app.UseSwagger();
-    //app.UseSwaggerUI();
     app.UseHsts();
 }
 

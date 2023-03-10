@@ -1,6 +1,5 @@
 ﻿@model IdentityServer.ViewModels.LoginViewModel;
 
-<body>
 <div class="row">
     <div class="col-md-6 offset-3 text-center">
         <p>
@@ -32,8 +31,33 @@
                         <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
                     </div>
                 </form>
+                <div class="col-md-6 offset-3 text-center">
+                    <p>
+                        <h4>External login</h4>
+                    </p>
+                    @{
+                        if (Model.ExternalLogins!.Count == 0)
+                        {
+                            <div>No external logins configured</div>
+                        }
+                        else
+                        {
+                            <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+                                <div>
+                                    @foreach (var provider in Model.ExternalLogins)
+                                    {
+                                        <button type="submit" class="btn btn-primary" style="width: auto"
+                                                name="provider" value="@provider.Name"
+                                                title="Login using your @provider.DisplayName account">
+                                            @provider.DisplayName
+                                        </button>
+                                    }
+                                </div>
+                            </form>
+                        }
+                    }
+                </div>
             </div>
         </div>
     </div>
 </div>
-</body>
