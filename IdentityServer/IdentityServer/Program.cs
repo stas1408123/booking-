@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors();
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var assembly = typeof(Program).GetTypeInfo().Assembly.GetName().Name;
 
@@ -27,7 +29,11 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AuthDbContext>(opt => opt.UseSqlServer(connectionString));
 
-builder.Services.AddIdentityServer()
+builder.Services.AddIdentityServer(options =>
+    {
+        options.UserInteraction.LoginUrl = "/auth/login";
+        options.UserInteraction.LogoutUrl = "/auth/logout";
+    })
     .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
     .AddInMemoryApiResources(Configuration.GetApiResources())
     .AddInMemoryClients(Configuration.GetClients())
@@ -63,6 +69,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(options =>
+    options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 app.UseRouting();
 
