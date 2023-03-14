@@ -11,7 +11,8 @@ public static class Configuration
         return new List<IdentityResource>
         {
             new IdentityResources.OpenId(),
-            new IdentityResources.Profile()
+            new IdentityResources.Profile(),
+            new IdentityResources.Email()
         };
     }
 
@@ -19,7 +20,8 @@ public static class Configuration
     {
         return new List<ApiResource>
         {
-            new("BookingAPI")
+            new("BookingAPI"),
+            new("Blazor")
         };
     }
 
@@ -50,6 +52,24 @@ public static class Configuration
                 {
                     "BookingAPI"
                 },
+            },
+            new()
+            {
+                ClientId = "client_id_blazor",
+                AllowedGrantTypes = GrantTypes.Code,
+                RequireClientSecret = false,
+                RequireConsent = false,
+                RequirePkce = true,
+                AllowedScopes =
+                {
+                    IdentityServerConstants.StandardScopes.Email,
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.Address
+                },
+                RedirectUris = { "https://localhost:9001/authentication/login-callback" },
+                PostLogoutRedirectUris = { "https://localhost:9001/authentication/logout-callback" },
+                AllowedCorsOrigins = { "https://localhost:9001" }
             }
         };
     }
@@ -58,7 +78,8 @@ public static class Configuration
     {
         return new ApiScope[]
         {
-            new("BookingAPI")
+            new("BookingAPI"),
+            new("Blazor")
         };
     }
 }

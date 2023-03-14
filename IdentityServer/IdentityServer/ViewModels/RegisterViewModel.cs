@@ -16,5 +16,7 @@ namespace IdentityServer.ViewModels
         [Required]
         [Compare("Password")]
         public string? ConfirmPassword { get; set; }
+
+        public string? ReturnUrl { get; set; }
     }
 }
