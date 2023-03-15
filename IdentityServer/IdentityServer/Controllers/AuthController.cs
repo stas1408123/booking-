@@ -137,7 +137,7 @@ public class AuthController : Controller
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
         model.ReturnUrl = TempData["returnUrl"].ToString();
-        if (ModelState.IsValid) return View(new RegisterViewModel());
+        if (!ModelState.IsValid) return View(new RegisterViewModel());
 
         var findResult = await _userManager.FindByNameAsync(model.UserName!);
 
