@@ -1,27 +1,35 @@
 ﻿using System.Security.Claims;
+using Duende.IdentityServer.Services;
 using IdentityServer.Models;
 using IdentityServer.ViewModels;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace IdentityServer.Controllers;
 
+[Route("[controller]")]
 public class AuthController : Controller
 {
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IIdentityServerInteractionService _interaction;
 
     public AuthController(UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager)
+        SignInManager<ApplicationUser> signInManager,
+        IIdentityServerInteractionService interaction)
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _interaction = interaction;
     }
 
     [HttpGet]
+    [Route("[action]")]
     public async Task<IActionResult> Login(string returnUrl)
     {
+        TempData["returnUrl"] = returnUrl;
         var model = new LoginViewModel
         {
             ReturnUrl = returnUrl,
@@ -32,6 +40,7 @@ public class AuthController : Controller
     }
 
     [HttpPost]
+    [Route("[action]")]
     public IActionResult ExternalLogin(string provider, string returnUrl)
     {
         var redirectUrl = Url.Action("ExternalLoginCallback", "Auth", new { ReturnUrl = returnUrl });
@@ -100,6 +109,7 @@ public class AuthController : Controller
     }
 
     [HttpPost]
+    [Route("[action]")]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         if (!ModelState.IsValid) return View(new LoginViewModel());
@@ -110,20 +120,23 @@ public class AuthController : Controller
 
         var signInResult = await _signInManager.PasswordSignInAsync(user, model.Password!, false, false);
 
-        if (signInResult.Succeeded) return RedirectToAction("Index", "Home");
+        if (signInResult.Succeeded) return Redirect(model.ReturnUrl);
 
         return View(new LoginViewModel());
     }
 
     [HttpGet]
+    [Route("[action]")]
     public IActionResult Register()
     {
         return View(new RegisterViewModel());
     }
 
     [HttpPost]
+    [Route("[action]")]
     public async Task<IActionResult> Register(RegisterViewModel model)
     {
+        model.ReturnUrl = TempData["returnUrl"].ToString();
         if (!ModelState.IsValid) return View(new RegisterViewModel());
 
         var findResult = await _userManager.FindByNameAsync(model.UserName!);
@@ -141,16 +154,18 @@ public class AuthController : Controller
         if (result.Succeeded)
         {
             await _signInManager.SignInAsync(userToCreate, true);
-            return RedirectToAction("Index", "Home");
+            return Redirect(model.ReturnUrl);
         }
 
         return View(new RegisterViewModel());
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Logout()
+    [HttpGet]
+    [Route("[action]")]
+    public async Task<IActionResult> Logout(string logoutId)
     {
+        var logout = await _interaction.GetLogoutContextAsync(logoutId);
         await _signInManager.SignOutAsync();
-        return RedirectToAction("Index", "Home");
+        return Redirect(logout.PostLogoutRedirectUri);
     }
 }
